@@ -2,29 +2,24 @@ class Point:
     'Point class'
 
     #Contructor
-    def __init__(self, name, x, y, directions_result, traffic_flow, max_flow):
-
+    def __init__(self, id, name, longitude, latitude, address):
+        self.id = id
         self.name = name
-        self.x = x
-        self.y = y
-        self.directions_result = directions_result
-        self.traffic_flow = traffic_flow
-        self.max_flow = max_flow
+        self.longitude = longitude
+        self.latitude = latitude
+        self.address = address
+
+    def getId(self):
+        return self.id
 
     def getName(self):
         return self.name
 
-    def getX(self):
-        return self.x
+    def getLongitude(self):
+        return self.longitude
 
-    def getY(self):
-        return self.y
+    def getLatitude(self):
+        return self.latitude
 
-    def getDirections_result(self):
-        return self.directions_result
-
-    def getTraffic_flow(self):
-        return self.traffic_flow
-
-    def getMax_flow(self):
-        return self.max_flow
+    def getAddress(self):
+        return self.address
