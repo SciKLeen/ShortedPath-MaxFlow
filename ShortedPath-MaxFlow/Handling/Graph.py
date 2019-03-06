@@ -2,33 +2,52 @@ import math
 import networkx as nx
 import matplotlib.pyplot as plt
 from Data.Point import Point
+from Data.Edges import Edges
 from Algorithm.Dijkstra.Dijkstra import dijkstra, shortest_path
 
-# Create some point
-def Points():
+
+# Create new point
+# id, name, longitude, latitude, address
+def CreatePoints():
 
     obj = []
+    obj.append(Point('00', 'A', 1, 1, "Nah"))
+    obj.append(Point('01', 'B', 1, 2, "Nah"))
+    obj.append(Point('02', 'C', 1, 3, "Nah"))
+    obj.append(Point('03', 'D', 1, 4, "Nah"))
+    obj.append(Point('04', 'E', 1, 5, "Nah"))
+    obj.append(Point('05', 'F', 1, 6, "Nah"))
+    return obj
 
-    obj.append(Point('A', 11, 12, {'B': [1, 1, 10],
-                                   'D': [5, 1, 10]}))
-    obj.append(Point('B', 11, 12, {'C': [1, 8, 20]}))
-    obj.append(Point('C', 11, 12, {'D': [1, 2, 20],
-                                   'F': [1, 8, 10]}))
-    obj.append(Point('D', 11, 12, {'E': [2, 4, 10],
-                                   'F': [1, 5, 30]}))
-    obj.append(Point('E', 11, 12, {'A': [1, 6, 10]}))
-    obj.append(Point('F', 11, 12, {'D': [1, 7, 20],
-                                   'E': [1, 5, 10]}))
 
+# Create new edge
+# id, street_name, from, to, weight, traffic_flow, max_flow
+def CreateEdges():
+
+    obj = []
+    obj.append(Edges('00', 'Nguyễn Thái Sơn',  'A', 'B', 1, 0, 0))
+    obj.append(Edges('01', 'Phan Văn trị',     'A', 'D', 5, 0, 0))
+    obj.append(Edges('02', 'Nguyễn Văn Bảo',   'B', 'C', 1, 0, 0))
+    obj.append(Edges('03', 'Huỳnh An Khương',  'C', 'F', 1, 0, 0))
+    obj.append(Edges('04', 'Phan Văn Trị',     'C', 'D', 1, 0, 0))
+    obj.append(Edges('05', 'Nguyễn Văn Nghi',  'F', 'E', 1, 0, 0))
+    obj.append(Edges('03', 'Lê Lợi',           'F', 'D', 1, 0, 0))
+    obj.append(Edges('04', 'Lê Lai',           'D', 'F', 1, 0, 0))
+    obj.append(Edges('05', 'Lê Quang Định',    'D', 'E', 2, 0, 0))
     return obj
 
 
 # Create Graph
-def CreateGraph(P):
-
+def CreateGraph(p, e):
     filled_dict = {}
-    for i in range(0, len(P), 1):
-        filled_dict.update({P[i].name: P[i].directions_result})
+
+    # Create null dictionary
+    for item in p:
+        filled_dict.update({item.getName(): {}})
+
+    # Add edges
+    for item in e:
+        filled_dict[item.getFrom()].update({item.getTo() : item.getWeight()})
 
     return filled_dict
 
@@ -47,7 +66,7 @@ def create_shorted_case(path):
 
 
 #Display Graph
-def display_Graph(p, paths, maxflow_edge):
+def display_Graph(graph, paths, maxflow_edge):
     #title
     plt.title("Graph")
     # Create Graph
@@ -56,10 +75,10 @@ def display_Graph(p, paths, maxflow_edge):
     #Get point and edge
     po_arr = []
     eds_arr = []
-    for point in p:
-        po_arr.append(point.name)
-        for edge in point.directions_result:
-            eds_arr.append((point.name, edge))
+    for point in graph:
+        po_arr.append(point)
+        for edge in graph[point]:
+            eds_arr.append((point, edge))
 
     G.add_nodes_from(po_arr)                            # Add vertices to the graph
     G.add_edges_from(eds_arr)                           # Add edges to the graph
@@ -123,10 +142,12 @@ def main(_from, _to, _maxflow):
     _to = _to.upper()
     _maxflow = _maxflow.upper()
 
-    P = Points()
+    # Pull point data
+    P = CreatePoints()
+    E = CreateEdges()
 
     # Create graph
-    graph = CreateGraph(P)
+    graph = CreateGraph(P, E)
 
     # Check the element in the array
     chk_Fr = 0
@@ -144,7 +165,6 @@ def main(_from, _to, _maxflow):
         paths = []
         graph0 = graph
         path0, v = shortest_path(graph0, _from, _to)
-
         path1, maxflow_edge = ifmaxflownotnull(_maxflow, graph0, _from, _to)
 
         paths.append(path0)
@@ -159,7 +179,7 @@ def main(_from, _to, _maxflow):
         '''
 
         # display Graph
-        display_Graph(P, paths, maxflow_edge)
+        display_Graph(graph, paths, maxflow_edge)
         return "Find the object"
     else:
         return "Not Found"

@@ -1,4 +1,4 @@
-class Point:
+class Edges:
     'Point class'
 
     # Contructor

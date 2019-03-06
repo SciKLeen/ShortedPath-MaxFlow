@@ -36,23 +36,19 @@ class Example(Frame):
 
         lbl_name = Label(layout_name, text="Enter the point:")
         lbl_des = Label(layout_des, text="Enter destination:")
-        lbl_max = Label(layout_max, text="Enter max flow edge:")
         lbl_name.pack(side=LEFT)
         lbl_des.pack(side=LEFT)
-        lbl_max.pack(side=LEFT)
 
         et_name = Entry(layout_name, width=20)
         et_des = Entry(layout_des, width=20)
-        et_max = Entry(layout_max, width=20)
         et_name.pack(side=RIGHT)
         et_des.pack(side=RIGHT)
-        et_max.pack(side=RIGHT)
+
 
         def _Click_Btn_Ok():
             X = et_name.get()
             Y = et_des.get()
-            maxflow = et_max.get()
-            Gr.main(X, Y, maxflow)
+            Gr.main(X, Y)
 
         #Bottom Button
         closeButton = Button(BotFrame, text="Close", command=self.quit)
