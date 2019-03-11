@@ -1,40 +1,20 @@
-import math
 import networkx as nx
 import matplotlib.pyplot as plt
+import Data.Readfiletxt as rf
 from Data.Point import Point
 from Data.Edges import Edges
 from Algorithm.Dijkstra.Dijkstra import dijkstra, shortest_path
 
-
 # Create new point
 # id, name, longitude, latitude, address
 def CreatePoints():
-
-    obj = []
-    obj.append(Point('00', 'A', 1, 1, "Nah"))
-    obj.append(Point('01', 'B', 1, 2, "Nah"))
-    obj.append(Point('02', 'C', 1, 3, "Nah"))
-    obj.append(Point('03', 'D', 1, 4, "Nah"))
-    obj.append(Point('04', 'E', 1, 5, "Nah"))
-    obj.append(Point('05', 'F', 1, 6, "Nah"))
-    return obj
+    return rf.Read_PointData()
 
 
 # Create new edge
 # id, street_name, from, to, weight, traffic_flow, max_flow
 def CreateEdges():
-
-    obj = []
-    obj.append(Edges('00', 'Nguyễn Thái Sơn',  'A', 'B', 1, 0, 0))
-    obj.append(Edges('01', 'Phan Văn trị',     'A', 'D', 5, 0, 0))
-    obj.append(Edges('02', 'Nguyễn Văn Bảo',   'B', 'C', 1, 0, 0))
-    obj.append(Edges('03', 'Huỳnh An Khương',  'C', 'F', 1, 0, 0))
-    obj.append(Edges('04', 'Phan Văn Trị',     'C', 'D', 1, 0, 0))
-    obj.append(Edges('05', 'Nguyễn Văn Nghi',  'F', 'E', 1, 0, 0))
-    obj.append(Edges('03', 'Lê Lợi',           'F', 'D', 1, 0, 0))
-    obj.append(Edges('04', 'Lê Lai',           'D', 'F', 1, 0, 0))
-    obj.append(Edges('05', 'Lê Quang Định',    'D', 'E', 2, 0, 0))
-    return obj
+    return rf.Read_EdgeData()
 
 
 # Create Graph
@@ -87,16 +67,15 @@ def display_Graph(graph, paths, maxflow_edge):
 
     ed0 = create_shorted_case(paths[0])
     ed1 = create_shorted_case(paths[1])
-    maxflow_edge = create_shorted_case(maxflow_edge)
 
     # Draw edges
     if len(maxflow_edge) > 0:
-        draw_edges(maxflow_edge[0], 'red', G, pos)
+        draw_edges(maxflow_edge, 'red', G, pos)
     max_len = max(len(ed0), len(ed1))
     for i in range(0, max_len, 1):
         if len(ed0) > i:
             if len(maxflow_edge) > 0:
-                if maxflow_edge[0] != ed0[i]:
+                if ed0[i][0] not in maxflow_edge:
                 #     draw_edges(maxflow_edge[0], 'red', G, pos)
                 # else:
                     draw_edges(ed0[i], 'blue', G, pos)
@@ -120,31 +99,57 @@ def display_Graph(graph, paths, maxflow_edge):
 
 
 def ifmaxflownotnull(_maxflow, graph, _from, _to):
-    maxflow_edge = []
     path = []
-    if _maxflow != '':
-        maxflow_edge = _maxflow.split('-')
+    temp = []
 
-        temp = graph[maxflow_edge[0]][maxflow_edge[1]]
 
-        del graph[maxflow_edge[0]][maxflow_edge[1]]
+    if len(_maxflow) > 0:
+        for item in _maxflow:
+            temp.append(graph[item[0]][item[1]])
+            del graph[item[0]][item[1]]
+        try:
+            path, v = shortest_path(graph, _from, _to)
+        except:
+            raise
 
-        path, v = shortest_path(graph, _from, _to)
+        for i in range(0, len(_maxflow), 1):
+            graph[_maxflow[i][0]][_maxflow[i][1]] = temp
 
-        graph[maxflow_edge[0]][maxflow_edge[1]] = temp
+        if path == []:
+            temp = ''
+            edge = ''
+            StP, v = shortest_path(graph, _from, _to)
+            for i in range (0, len(StP) - 1, 1):
+                if (StP[i], StP[i+1]) in _maxflow:
+                    edge = [(StP[i], StP[i+1])]
+                    temp = (graph[StP[i][0]][StP[i][1]])
+                    del graph[StP[i]][StP[i+1]]
+                    path, v = shortest_path(graph, _from, _to)
+                    break
 
-    return path, maxflow_edge
+            graph[edge[0]][edge[1]] = temp
+
+    #     maxflow_edge = _maxflow.split('-')
+    #
+    #     temp = graph[maxflow_edge[0]][maxflow_edge[1]]
+    #
+    #     del graph[maxflow_edge[0]][maxflow_edge[1]]
+    #
+    #     path, v = shortest_path(graph, _from, _to)
+    #
+    #     graph[maxflow_edge[0]][maxflow_edge[1]] = temp
+
+    return path, _maxflow
 
 
 # ---------------------------------------------- "Main Function" ----------------------------------------------
-def main(_from, _to, _maxflow):
+def main(_from, _to):
     _from = _from.upper()
     _to = _to.upper()
-    _maxflow = _maxflow.upper()
 
-    # Pull point data
+    # Pull point, edge, Maxflow data
     P = CreatePoints()
-    E = CreateEdges()
+    E, _maxflow = CreateEdges()
 
     # Create graph
     graph = CreateGraph(P, E)
@@ -161,10 +166,13 @@ def main(_from, _to, _maxflow):
             chk_To = 1
 
     if chk_Fr & chk_To:
-
         paths = []
-        graph0 = graph
+        def CreateNewGraph(graph):
+            return graph
+
+        graph0 = CreateNewGraph(graph)
         path0, v = shortest_path(graph0, _from, _to)
+
         path1, maxflow_edge = ifmaxflownotnull(_maxflow, graph0, _from, _to)
 
         paths.append(path0)
@@ -179,7 +187,7 @@ def main(_from, _to, _maxflow):
         '''
 
         # display Graph
-        display_Graph(graph, paths, maxflow_edge)
+        display_Graph(graph, paths, _maxflow)
         return "Find the object"
     else:
         return "Not Found"
