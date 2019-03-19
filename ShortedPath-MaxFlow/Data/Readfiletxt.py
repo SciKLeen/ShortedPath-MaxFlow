@@ -1,5 +1,6 @@
 from Data.Point import Point
 from Data.Edges import Edges
+import random
 
 def Readfile(str, encod):
     f = ''
@@ -45,12 +46,15 @@ def Read_EdgeData():
         _from = item[2]
         _to = item[3]
         weight = int(item[4])
-        traffic_flow = int(item[5])
+
         max_flow = item[6]
         if max_flow[-2:] == "\n":
             max_flow = int(max_flow[:-2])
 
-        if (float(traffic_flow)/float(max_flow))*100:
+        # traffic_flow = int(item[5])
+        traffic_flow = random.randint(0, int(max_flow) + 1)
+
+        if ((float(traffic_flow)/float(max_flow))*100) > 80:
             _maxflow.append((_from, _to))
 
         obj.append(Edges(id, street_name, _from, _to, weight, traffic_flow, max_flow))

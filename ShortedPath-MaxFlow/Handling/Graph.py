@@ -5,6 +5,30 @@ from Data.Point import Point
 from Data.Edges import Edges
 from Algorithm.Dijkstra.Dijkstra import dijkstra, shortest_path
 
+
+# Check path
+def check_path(graph, _from, _to):
+    def check_path_recursive(graph, stack_reverse, ps, _str, _to):
+        for item in graph[_str]:
+            stack_reverse.append(item)
+            if item == _to:
+                return True
+        if len(stack_reverse) > 0:
+            _str = stack_reverse.pop()
+            ps[_str] = 1
+            return check_path_recursive(graph, stack_reverse, ps, _str, _to)
+
+        return False
+
+
+    ps = {}
+    for item in graph:
+        ps[item] = 0
+    stack_reverse = []
+
+    return check_path_recursive(graph, stack_reverse, ps, _from, _to)
+
+
 # Create new point
 # id, name, longitude, latitude, address
 def CreatePoints():
@@ -55,15 +79,18 @@ def display_Graph(graph, paths, maxflow_edge):
     #Get point and edge
     po_arr = []
     eds_arr = []
+    eds_arr_lbl = {}
     for point in graph:
         po_arr.append(point)
         for edge in graph[point]:
             eds_arr.append((point, edge))
+            eds_arr_lbl[(point, edge)] = graph[point][edge]
 
     G.add_nodes_from(po_arr)                            # Add vertices to the graph
-    G.add_edges_from(eds_arr)                           # Add edges to the graph
+    G.add_edges_from(eds_arr)  # Add edges to the graph
 
-    pos = nx.spring_layout(G)                           # create Pos
+    pos = nx.circular_layout(G)
+    #pos = nx.spring_layout(G)                           # create Pos
 
     ed0 = create_shorted_case(paths[0])
     ed1 = create_shorted_case(paths[1])
@@ -76,22 +103,23 @@ def display_Graph(graph, paths, maxflow_edge):
         if len(ed0) > i:
             if len(maxflow_edge) > 0:
                 if ed0[i][0] not in maxflow_edge:
-                #     draw_edges(maxflow_edge[0], 'red', G, pos)
-                # else:
                     draw_edges(ed0[i], 'blue', G, pos)
             else:
                 draw_edges(ed0[i], 'blue', G, pos)
+
         if len(ed1) > i:
-            if len(ed0) > i:
-                if ed0[i] != ed1[i]:
+            if ed1[i][0] not in maxflow_edge:
+                if len(ed0) > i:
+                    if ed0[i] != ed1[i]:
+                        draw_edges(ed1[i], 'gray', G, pos)
+                else:
                     draw_edges(ed1[i], 'gray', G, pos)
-            else:
-                draw_edges(ed1[i], 'gray', G, pos)
     # draw_edges(ed0, 'blue', G, pos)
     # draw_edges(ed1, 'yellow', G, pos)
     # draw_edges(maxflow_edge, 'red', G, pos)
 
     nx.draw(G, pos, with_labels=True, node_size=500, alpha=0.8)  # set properties
+    nx.draw_networkx_edge_labels(G, pos, edge_labels=eds_arr_lbl)
 
     #show
     plt.draw()
@@ -107,38 +135,46 @@ def ifmaxflownotnull(_maxflow, graph, _from, _to):
         for item in _maxflow:
             temp.append(graph[item[0]][item[1]])
             del graph[item[0]][item[1]]
-        try:
+
+        # check path From -> To
+        _bool = check_path(graph, _from, _to)
+        if _bool == True:
             path, v = shortest_path(graph, _from, _to)
-        except:
-            raise
 
+
+        # resert edge for graph
         for i in range(0, len(_maxflow), 1):
-            graph[_maxflow[i][0]][_maxflow[i][1]] = temp
+            graph[_maxflow[i][0]][_maxflow[i][1]] = temp[i]
 
-        if path == []:
+        if _bool == False:
             temp = ''
             edge = ''
             StP, v = shortest_path(graph, _from, _to)
-            for i in range (0, len(StP) - 1, 1):
-                if (StP[i], StP[i+1]) in _maxflow:
-                    edge = [(StP[i], StP[i+1])]
-                    temp = (graph[StP[i][0]][StP[i][1]])
-                    del graph[StP[i]][StP[i+1]]
-                    path, v = shortest_path(graph, _from, _to)
-                    break
 
+            edges = create_shorted_case(StP)
+            for item in edges:
+                if (item[0]) in _maxflow:
+                    edge = [item[0][0], item[0][1]]
+                    temp = graph[item[0][0]][item[0][1]]
+                    del graph[item[0][0]][item[0][1]]
+                    _bool = check_path(graph, _from, _to)
+                    if _bool:
+                        path, v = shortest_path(graph, _from, _to)
+                        break
             graph[edge[0]][edge[1]] = temp
-
-    #     maxflow_edge = _maxflow.split('-')
-    #
-    #     temp = graph[maxflow_edge[0]][maxflow_edge[1]]
-    #
-    #     del graph[maxflow_edge[0]][maxflow_edge[1]]
-    #
-    #     path, v = shortest_path(graph, _from, _to)
-    #
-    #     graph[maxflow_edge[0]][maxflow_edge[1]] = temp
-
+        # if path == []:
+        #     temp = ''
+        #     edge = ''
+        #     StP, v = shortest_path(graph, _from, _to)
+        #     for i in range (0, len(StP) - 1, 1):
+        #         if (StP[i], StP[i+1]) in _maxflow:
+        #             edge = [(StP[i], StP[i+1])]
+        #             temp = (graph[StP[i][0]][StP[i][1]])
+        #             del graph[StP[i]][StP[i+1]]
+        #             path, v = shortest_path(graph, _from, _to)
+        #             break
+        #
+        #     graph[edge[0]][edge[1]] = temp
     return path, _maxflow
 
 
@@ -150,6 +186,7 @@ def main(_from, _to):
     # Pull point, edge, Maxflow data
     P = CreatePoints()
     E, _maxflow = CreateEdges()
+
 
     # Create graph
     graph = CreateGraph(P, E)
@@ -172,7 +209,6 @@ def main(_from, _to):
 
         graph0 = CreateNewGraph(graph)
         path0, v = shortest_path(graph0, _from, _to)
-
         path1, maxflow_edge = ifmaxflownotnull(_maxflow, graph0, _from, _to)
 
         paths.append(path0)
