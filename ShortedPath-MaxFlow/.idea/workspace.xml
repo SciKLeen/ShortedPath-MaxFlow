@@ -1,16 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="d533ad73-9db1-4d05-85bf-760ac351d6a7" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/Data/file demo" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Data/EdgesData.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Data/EdgesData.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Data/PointsData.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Data/PointsData.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Data/Readfiletxt.py" beforeDir="false" afterPath="$PROJECT_DIR$/Data/Readfiletxt.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Handling/Graph.py" beforeDir="false" afterPath="$PROJECT_DIR$/Handling/Graph.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Handling/Graph1.py" beforeDir="false" afterPath="$PROJECT_DIR$/Handling/Graph1.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Handling/test.py" beforeDir="false" afterPath="$PROJECT_DIR$/Handling/test.py" afterDir="false" />
-    </list>
+    <list default="true" id="d533ad73-9db1-4d05-85bf-760ac351d6a7" name="Default Changelist" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -22,8 +13,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/MainPage.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="156">
-              <caret line="11" column="21" selection-start-line="11" selection-start-column="21" selection-end-line="11" selection-end-column="21" />
+            <state relative-caret-position="394">
+              <caret line="25" column="42" lean-forward="true" selection-start-line="25" selection-start-column="42" selection-end-line="25" selection-end-column="42" />
               <folding>
                 <element signature="e#0#44#0" expanded="true" />
               </folding>
@@ -123,7 +114,7 @@
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="7">
+  <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="606" />
     <option name="width" value="487" />
     <option name="height" value="775" />
@@ -282,8 +273,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1382" height="754" extended-state="7" />
-    <editor active="true" />
+    <frame x="-8" y="-8" width="1382" height="754" extended-state="6" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.1592262" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
@@ -367,8 +357,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/MainPage.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="156">
-          <caret line="11" column="21" selection-start-line="11" selection-start-column="21" selection-end-line="11" selection-end-column="21" />
+        <state relative-caret-position="394">
+          <caret line="25" column="42" lean-forward="true" selection-start-line="25" selection-start-column="42" selection-end-line="25" selection-end-column="42" />
           <folding>
             <element signature="e#0#44#0" expanded="true" />
           </folding>
