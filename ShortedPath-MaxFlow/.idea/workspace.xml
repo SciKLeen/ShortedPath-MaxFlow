@@ -2,14 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d533ad73-9db1-4d05-85bf-760ac351d6a7" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/Data/file demo" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Data/EdgesData.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Data/EdgesData.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Data/PointsData.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Data/PointsData.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Data/Readfiletxt.py" beforeDir="false" afterPath="$PROJECT_DIR$/Data/Readfiletxt.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Handling/Graph.py" beforeDir="false" afterPath="$PROJECT_DIR$/Handling/Graph.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Handling/Graph1.py" beforeDir="false" afterPath="$PROJECT_DIR$/Handling/Graph1.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Handling/test.py" beforeDir="false" afterPath="$PROJECT_DIR$/Handling/test.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.vs/slnx.sqlite" beforeDir="false" afterPath="$PROJECT_DIR$/../.vs/slnx.sqlite" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../port Python/data/Seeder.py" beforeDir="false" afterPath="$PROJECT_DIR$/../port Python/data/Seeder.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../port Python/source/templates/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/../port Python/source/templates/index.html" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -123,7 +118,7 @@
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="7">
+  <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="606" />
     <option name="width" value="487" />
     <option name="height" value="775" />
@@ -282,8 +277,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1382" height="754" extended-state="7" />
-    <editor active="true" />
+    <frame x="-8" y="-8" width="1382" height="754" extended-state="6" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.1592262" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
