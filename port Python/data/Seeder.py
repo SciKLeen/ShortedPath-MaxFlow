@@ -2,13 +2,13 @@
 # require 'json'
 # require 'faraday'
 import pandas as pd
-import requests as rq
+import request rq
 
 # bandung = CSV.read("bandung_coord.csv");
 IUH = pd.read_csv("IUH__coord.csv")
 
-res = rq.get('http://localhost:9200')
 # elastic = Faraday.new(:url => 'http://localhost:9200') do |faraday|
+res = requests.get('http://localhost:9200')
 #   faraday.request :url_encoded
 #   faraday.response :logger
 #   faraday.adapter Faraday.default_adapter

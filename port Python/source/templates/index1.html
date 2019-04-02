@@ -17,22 +17,22 @@
     <div class="input-container">
       <form name="mapsForm">
         <div class="form-group">
-          <div class="label">Origin</div>
+          <div class="label">latitude</div>
           <!-- <input id="origin" type="text" class="form-control" placeholder="Origin" /> -->
-          <input id="origin-latitude" type="text" class="form-control" placeholder="Latitude" value="-6.893783" />
-          <input id="origin-longitude" type="text" class="form-control" placeholder="Longitude" value="107.608579" />
+          <input id="latitude" type="text" class="form-control" placeholder="Latitude" value="10.8370551" />
+          <!-- <input id="origin-longitude" type="text" class="form-control" placeholder="Longitude" value="107.608579" /> -->
         </div>
         <div class="form-group">
-          <div class="label">Destination</div>
+          <div class="label">Longitude</div>
           <!-- <input id="destination" type="text" class="form-control" placeholder="Destination" /> -->
-          <input id="destination-latitude" type="text" class="form-control" placeholder="Latitude" value="-6.907145" />
-          <input id="destination-longitude" type="text" class="form-control" placeholder="Longitude" value="107.611776"/>
+          <input id="longtitude" type="text" class="form-control" placeholder="Longtitude" value="106.6648734" />
+          <!-- <input id="destination-longitude" type="text" class="form-control" placeholder="Longitude" value="107.611776"/> -->
         </div>
-        <div class="form-group">
-          <div class="label">Distance</div>
+        <!-- <div class="form-group">
+          <div class="label">Longitude</div> -->
           <!-- <input id="destination" type="text" class="form-control" placeholder="Destination" /> -->
-          <input id="distance" type="text" class="form-control" placeholder="20m" value="20m" />
-        </div>
+          <!-- <input id="distance" type="text" class="form-control" placeholder="20m" value="20m" />
+        </div> -->
         <div class="form-group">
           <button id="submit" class="btn waves-effect waves-light" type="button">
             <i class="fa fa-paper-plane"></i>
@@ -44,37 +44,87 @@
     <div id="map"></div>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/async/2.4.0/async.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/fermata/0.10.8/fermata.min.js"></script>
-    <script async defer src="https://maps.googleapis.com/maps/api/js?key=<Your Api Key>&callback=initMap" type="text/javascript"></script>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=<APIKEY>&callback=initMap" type="text/javascript"></script>
     </script>
+    <!-- <script async defer src="https://maps.googleapis.com/maps/api/directions/json?origin=Disneyland&destination=Universal+Studios+Hollywood&key=AIzaSyAVG8dSFLqEAs95UR4RUYxPowBlfdQn0og&callback=initMap" type="text/javascript"></script> -->
+    
+     
+  </script>
     <script type="text/javascript">
       var map, marker, geocoder, directionsDisplay, request, directionsService;
       function initMap() {
-        var ganesha = {lat: 10.8370551, lng: 106.6648734};
+        var ganesha = {lat: -33.9, lng: 151.2};
         map = new google.maps.Map(document.getElementById('map'), {
-          zoom: 14,
-          center: ganesha
+          zoom: 15,
+          center: ganesha,
+          mapTypeId: 'terrain'
         });
-        // marker = new google.maps.Marker({
-        //   position: ganesha,
-        //   map: map
+        //map.addListener('click', addLatLng);
+
+        // var flightPlanCoordinates = [
+        //   {lat: -6.893759, lng: 107.6084671},
+        //   {lat: -6.8935901, lng: 107.6087933},
+        //   {lat: -6.8933655, lng: 107.6093821},
+        //   {lat: -6.8932224, lng: 107.6101272},
+        //   {lat: -6.8932083, lng: 107.6103897},
+        //   {lat: -6.893203, lng: 107.6105077},
+        //   {lat: -6.8932536, lng: 107.610902},
+        //   {lat: -6.8934601, lng: 107.6115446},
+        //   {lat: -6.8936441, lng: 107.6119504}
+        // ];
+        // var flightPath = new google.maps.Polyline({
+        //   path: flightPlanCoordinates,
+        //   geodesic: true,
+        //   strokeColor: '#FF0000',
+        //   strokeOpacity: 1.0,
+        //   strokeWeight: 2
         // });
-        var directionsService = new google.maps.DirectionsService;
-        directionsService.router(
-        {  origin: 'Ha Noi',
-          destination: 'Ha Nam',
-          travelMode: 'Driving'
-        },
-        function(result, status){
-          if(status == 'OK'){
-            console.log(result);
-          }
-        }
-        );
-        
 
-
-        directionsService = new google.maps.DirectionsService();
+        map.addListener('click', addLatLng);
       }
+
+      //  get maker when click on map screen
+      // function addLatLng(event){
+      //   var marker = new googe.map.Marker({
+      //     position: event.latLng,
+      //     title: '#' + path.getLenght(),
+      //     map: map
+      //   });
+      // }
+
+
+
+      function addLatLng(event) {
+        var marker = new google.maps.Marker({
+            position: event.latLng,
+            title: '#' + path.getLength(),
+            map: map
+          });
+      };
+
+      document.getElementById('submit').addEventListener('click', function() {
+          submit()
+      });
+
+        function submit() {
+          // var lat, lon;
+          // lat = document.getElementById('latitude').value;
+          // lon = document.getElementById('longtitude').value;
+          // document.getElementById('longtitude').innerHTML = 'lol';
+
+          var ganesha = {lat: 10.8370551, lng: 106.6648734};
+          map = new google.maps.Map(document.getElementById('map'), {
+            zoom: 14,
+            center: ganesha
+          });
+          var marker = new google.maps.Marker({
+              position: ganesha,
+              map: map
+          });
+          directionsDisplay.setMap(map);
+          
+        }
+        
 
      
     </script>

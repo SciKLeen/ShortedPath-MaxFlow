@@ -1,8 +1,9 @@
 {
   "ExpandedNodes": [
     "",
-    "\\port Python"
+    "\\port Python",
+    "\\port Python\\source"
   ],
-  "SelectedNode": "\\ShortedPath-MaxFlow",
+  "SelectedNode": "\\port Python\\source\\application.py",
   "PreviewInSolutionExplorer": false
 }
