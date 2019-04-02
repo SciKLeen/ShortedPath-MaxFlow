@@ -3,11 +3,15 @@
 # require 'faraday'
 import pandas as pd
 import requests as rq
+import json
+import logging
 
 # bandung = CSV.read("bandung_coord.csv");
 IUH = pd.read_csv("IUH__coord.csv")
 
-res = rq.get('http://localhost:9200')
+logging.basicConfig(level = logging.debug)
+elastic = rq.get('http://localhost:9200')
+
 # elastic = Faraday.new(:url => 'http://localhost:9200') do |faraday|
 #   faraday.request :url_encoded
 #   faraday.response :logger
@@ -22,5 +26,5 @@ res = rq.get('http://localhost:9200')
 #   end
 # end
 
-
+#Note: I think change json and requests library to elasticsearch library
 
