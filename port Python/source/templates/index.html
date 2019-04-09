@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta charset="UTF-8">
-    <title>Maps Routing Electron - Panggi Libersa Jasri Akadol</title>
+    <title>Maps Routing Electron</title>
     <style>
        #map {
         height: 100vh;
@@ -12,27 +12,33 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/css/materialize.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="../static/main.css">
+    <link rel="stylesheet" type="text/css" href="https://js.api.here.com/v3/3.0/mapsjs-ui.css?dp-version=1549984893" />
+
+    <script type="text/javascript" src="https://js.api.here.com/v3/3.0/mapsjs-core.js"></script>
+    <script type="text/javascript" src="https://js.api.here.com/v3/3.0/mapsjs-service.js"></script>
+    <script type="text/javascript" src="https://js.api.here.com/v3/3.0/mapsjs-ui.js"></script>
+    <script type="text/javascript" src="https://js.api.here.com/v3/3.0/mapsjs-mapevents.js"></script>
   </head>
   <body>
     <div class="input-container">
       <form name="mapsForm">
         <div class="form-group">
-          <div class="label">Origin</div>
+          <div class="label">latitude</div>
           <!-- <input id="origin" type="text" class="form-control" placeholder="Origin" /> -->
-          <input id="origin-latitude" type="text" class="form-control" placeholder="Latitude" value="-6.893783" />
-          <input id="origin-longitude" type="text" class="form-control" placeholder="Longitude" value="107.608579" />
+          <input id="latitude" type="text" class="form-control" placeholder="Latitude" value="10.8191594" />
+          <!-- <input id="origin-longitude" type="text" class="form-control" placeholder="Longitude" value="107.608579" /> -->
         </div>
         <div class="form-group">
-          <div class="label">Destination</div>
+          <div class="label">Longitude</div>
           <!-- <input id="destination" type="text" class="form-control" placeholder="Destination" /> -->
-          <input id="destination-latitude" type="text" class="form-control" placeholder="Latitude" value="-6.907145" />
-          <input id="destination-longitude" type="text" class="form-control" placeholder="Longitude" value="107.611776"/>
+          <input id="longtitude" type="text" class="form-control" placeholder="Longtitude" value="106.6867526" />
+          <!-- <input id="destination-longitude" type="text" class="form-control" placeholder="Longitude" value="107.611776"/> -->
         </div>
-        <div class="form-group">
-          <div class="label">Distance</div>
+        <!-- <div class="form-group">
+          <div class="label">Longitude</div> -->
           <!-- <input id="destination" type="text" class="form-control" placeholder="Destination" /> -->
-          <input id="distance" type="text" class="form-control" placeholder="20m" value="20m" />
-        </div>
+          <!-- <input id="distance" type="text" class="form-control" placeholder="20m" value="20m" />
+        </div> -->
         <div class="form-group">
           <button id="submit" class="btn waves-effect waves-light" type="button">
             <i class="fa fa-paper-plane"></i>
@@ -41,109 +47,128 @@
         </div>
       </form>
     </div>
-    <div id="map"></div>
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/async/2.4.0/async.min.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/fermata/0.10.8/fermata.min.js"></script>
-    <script async defer src="https://maps.googleapis.com/maps/api/js?key=<APIKEY>&callback=initMap" type="text/javascript"></script>
-    </script>
-    <script type="text/javascript">
-      var map, marker, geocoder, directionsDisplay, request, directionsService;
-      var baseUrl = "http://localhost:4567"
-      var site = fermata.json(baseUrl);
-        function initMap() {
-          var ganesha = {lat: -6.893210, lng: 107.610445};
-          map = new google.maps.Map(document.getElementById('map'), {
-            zoom: 14,
-            center: ganesha
-          });
-          marker = new google.maps.Marker({
-            position: ganesha,
-            map: map
-          });
-          directionsService = new google.maps.DirectionsService();
-        }
-        document.getElementById('submit').addEventListener('click', function() {
-          submit()
+    <div id="map"></div> 
+    <script type="text/javascript" charset="UTF-8">
+      var lat, lng, map;
+      var platform = new H.service.Platform({
+        'app_id': '<ID>',
+        'app_code': '<CODE>',
+      });
+
+      // Drawing line in map by ---------------------------------------------------------------------------------------
+      function addPolylineToMap(map, lstPoint) {
+        var lineString = new H.geo.LineString();
+        // var lstPoint = [[10.8191594, 106.6867526], [10.8262926, 106.6893101], [10.8222614, 106.6944201], [10.8273340, 106.6881662 ]];
+        
+        for(var i = 0; i < lstPoint.length; i++)
+          addmakerforLine(lstPoint[i][0], lstPoint[i][1]),
+          lineString.pushPoint({lat: lstPoint[i][0], lng: lstPoint[i][1]});
+
+        map.addObject(new H.map.Polyline(
+          lineString, { style: { lineWidth: 4 }}
+        ));
+      } 
+      /**
+      * Creates a series of H.map.Marker points from the route and adds them to the map.
+      * @param {Object} route  A route as received from the H.service.RoutingService
+      */
+      function addmakerforLine(_lat, _lng){
+        var svgMarkup = '<svg width="18" height="18" ' +
+          'xmlns="http://www.w3.org/2000/svg">' +
+          '<circle cx="8" cy="8" r="8" ' +
+            'fill="#1b468d" stroke="white" stroke-width="1"  />' +
+          '</svg>',
+          dotIcon = new H.map.Icon(svgMarkup, {anchor: {x:8, y:8}}),
+          group = new  H.map.Group(),
+          i,
+          j;
+        
+        //maneuver = route.leg[i].maneuver[j];
+        // Add a marker to the maneuvers group
+        var marker =  new H.map.Marker({
+          lat: _lat,
+          lng: _lng},
+          {
+            icon: dotIcon
+          }
+        );
+          //marker.instruction = maneuver.instruction;
+          map.addObject(marker);
+
+        // group.addEventListener('tap', function (evt) {
+        //   map.setCenter(evt.target.getPosition());
+        //   openBubble(
+        //     evt.target.getPosition(), evt.target.instruction);
+        // }, false);
+
+        // // Add the maneuvers group to the map
+        // map.addObject(group);
+      }
+      
+      // Click event map
+      function addClickEventListenerToMap(map) {
+        // add 'tap' listener
+        map.addEventListener('tap', function (evt) {
+          //var coords =  [evt.currentPointer.viewportX, evt.currentPointer.viewportY];
+          var coords =  map.screenToGeo(evt.currentPointer.viewportX, evt.currentPointer.viewportY);
+          //alert(coords.value);
+          
+          var setMarker = new H.map.Marker({lat:coords.lat, lng:coords.lng});
+          map.addObject(setMarker);
+          //alert(typeof (coords.lat))
+        }, false);
+      }
+      //Move map to latitude and longtitude ----------------------------------------------------------------------------
+      function moveMap(map, _lat, _lng){
+        map.setCenter({lat:_lat, lng:_lng});
+        map.setZoom(14);
+      }
+      //Create map========================================================================================================    
+      function initMap() {
+        //Step 1: initialize communication with the platform
+        var pixelRatio = window.devicePixelRatio || 1;
+        var defaultLayers = platform.createDefaultLayers({
+          tileSize: pixelRatio === 1 ? 256 : 512,
+          ppi: pixelRatio === 1 ? undefined : 320
         });
 
-        function submit() {
+        //Step 2: initialize a map  - not specificing a location will give a whole world view.
+        lat = parseFloat(document.getElementById('latitude').value);
+        lng = parseFloat(document.getElementById('longtitude').value);
 
-          async.parallel([
-            function(callback) {
-              var latitude = parseFloat(document.getElementById('origin-latitude').value);
-              var longitude = parseFloat(document.getElementById('origin-longitude').value);
-              getPoints(latitude, longitude, function(err, data) {
-                if (data) callback(null, data.data.hits.hits[0]._id)
-              })
-            },
-            function(callback) {
-              var latitude = parseFloat(document.getElementById('destination-latitude').value);
-              var longitude = parseFloat(document.getElementById('destination-longitude').value);
-              getPoints(latitude, longitude, function(err, data) {
-                if (data) callback(null, data.data.hits.hits[0]._id)
-              })
-            }
-          ], function(err, points) {
-            if (points[0] && points[1]) {
-              getRoute(points[0], points[1], function(err, data) {
-                if (data.data.length > 0) setRoute(data.data)
-              })
-            }
-          })
-        }
+        map = new H.Map(document.getElementById('map'),
+        defaultLayers.normal.map, {
+          pixelRatio: pixelRatio,
+        });
 
-        function getPoints(latitude, longitude, callback) {
-          var distance = document.getElementById('distance').value;
-          return site.pointer.post({ lat: latitude, lon: longitude, distance: distance }, callback)
-        }
+        //Step 3: make the map interactive
+        // MapEvents enables the event system
+        // Behavior implements default interactions for pan/zoom (also on mobile touch environments)
+        var behavior = new H.mapevents.Behavior(new H.mapevents.MapEvents(map));
 
-        function getRoute(start, destination, callback) {
-          return site.router.post({ start: start, destination: destination }, callback)
-        }
+        // Create the default UI components
+        var ui = H.ui.UI.createDefault(map, defaultLayers);
+        
+        moveMap(map, lat, lng);
+        //addClickEventListenerToMap(map);
+      }
 
-        function setRoute(sourceLocations) {
-          if (sourceLocations.length > 20) {
-            var locations = parseArray(sourceLocations, 20);
-          } else {
-            var locations = sourceLocations
-          }
-          directionsDisplay = new google.maps.DirectionsRenderer();
-          request = {
-            travelMode: google.maps.TravelMode.WALKING,
-            optimizeWaypoints: true
-          };
-          map.setCenter(new google.maps.LatLng(locations[0][0], locations[0][1]))
-          directionsDisplay.setMap(map);
+      document.getElementById('submit').addEventListener('click', function() {
+        submit()
+      });
+      function submit() {
+          
+      }
 
-          // Sau ------------------------------------------------------------------------------------------
-          var routes = []
-          for(var i = 0; i < locations.length; i++) {
-            if (i == 0) request.origin = new google.maps.LatLng(locations[i][0], locations[i][1]);
-            else if (i == locations.length - 1) request.destination = new google.maps.LatLng(locations[i][0], locations[i][1]);
-            else {
-              routes.push({"lat": locations[i][0], "lng": locations[i][1]});
-            }
-          }
+      
 
-          //check "routes"
-          var routePath = new google.maps.Polyline({
-            path: routes,
-            geodesic: true,
-            strokeColor: '#FF0000',
-            strokeOpacity: 1.0,
-            strokeWeight: 2
-          });
-          routePath.setMap(map);
-        }
+      lstPoint = [
+        [10.8232, 106.6859], 
+        [10.8226, 106.6865], 
+      ];
 
-        function parseArray(array, total) {
-          var increment = parseInt(array.length / total)
-          var tempArray = []
-          for (var i = 0; i < array.length; i += increment) {
-            tempArray.push(array[i])
-          }
-          return tempArray
-        }
+      initMap();
+      addPolylineToMap(map, lstPoint);
     </script>
   </body>
 </html>

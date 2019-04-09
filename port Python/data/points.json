@@ -1,0 +1,162 @@
+
+{
+    "00" :{
+            
+            "Name": "Bún măm Thu",
+            "address" : "338 Nguyễn Thái Sơn, Phường 4, Gò Vấp, Hồ Chí Minh, Vietnam",
+            "latitude" : "10.8232",
+            "longtitude": "106.6859"
+        },
+    "01" :{
+        "Name": "Agribank - Atm",
+        "address" : "12 Nguyễn Văn Bảo, Thành Phố Hồ Chí Minh, Việt Nam",
+        "latitude" : "10.8226",
+        "longtitude": "106.6865"
+    },
+    "02": {
+        "Name": "Cổng 1 Đại Học Công Nghiệp",
+        "address" : "12 Nguyễn Văn Bảo, Thành Phố Hồ Chí Minh, Việt Nam",
+        "latitude" : "10.822",
+        "longtitude": "106.6869"
+    },
+    "03": {
+        "Name": "Circle K Vietnam",
+        "address" : "Hẻm 27 Lê Lợi, Phường 4, Gò Vấp, Hồ Chí Minh, Vietnam",
+        "latitude" : "10.8208",
+        "longtitude": "106.6874"
+    },
+    "04": {
+        "Name": "Lotteria Nguyễn Văn Nghi",
+        "address" : "33 Nguyễn Văn Nghi, Gò Vấp, Hồ Chí Minh, Vietnam",
+        "latitude" : "10.8218",
+        "longtitude": "106.6886"
+    },
+
+    "05": {
+        "Name": "Tiệm Vàng Kim Ngọc Loan",
+        "address" : "74 Nguyễn Văn Nghi, Phường 5, Gò Vấp, Hồ Chí Minh, Vietnam",
+        "latitude" : "10.822765",
+        "longtitude": "106.688185"
+    },
+
+    "06": {
+        "Name": "Công Ty TNHH Câu Lạc Bộ Võ Thuật Thần Châu",
+        "address" : "184 Đường Nguyễn Văn Nghi, Phường 5, Gò Vấp, Hồ Chí Minh, Vietnam",
+        "latitude" : "10.824180",
+        "longtitude": "106.686644"
+    },
+
+    "07": {
+        "Name": "Trà Sữa Dr. Mên",
+        "address" : "34 Lê Lợi, Phường 4, Gò Vấp, Hồ Chí Minh, Vietnam",
+        "latitude" : "10.820631",
+        "longtitude": "106.687259"
+    },
+
+    "08": {
+        "Name": "Trà sữa MrBig store",
+        "address" : "72 Lê Lợi, Phường 4, Gò Vấp, Hồ Chí Minh, Vietnam",
+        "latitude" : "10.820131",
+        "longtitude": "106.686364"
+    },
+
+    "09": {
+        "Name": "Công ty TNHH Đất Mũi",
+        "address" : "58 Đường số 1, P.4, Q.Gò Vấp, Phường 4, Gò Vấp, Hồ Chí Minh, Vietnam",
+        "latitude" : "10.821301",
+        "longtitude": "106.685254"
+    },
+
+    "10": {
+        "Name": "Nail Cúc",
+        "address" : "56, Đường Số 1, Phường 4, Quận Gò Vấp, Thành Phố Hồ Chí Minh",
+        "latitude" : "10.821777",
+        "longtitude": "106.685863"
+    },
+
+    "11": {
+        "Name": "Công Ty Tnhh Thương Mại Phát Triển Xây Dựng Minh Hùng",
+        "address" : "222 Nguyễn Thái Sơn, Gò Vấp, Vietnam",
+        "latitude" : "10.822315",
+        "longtitude": "106.685160"
+    },
+
+    "12": {
+        "Name": "Cửa Hàng Thái Lan",
+        "address" : "268 Nguyễn Thái Sơn, Phường 4, Gò Vấp, Hồ Chí Minh, Vietnam",
+        "latitude" : "10.821533",
+        "longtitude": "106.684590"
+    },
+
+    "13": {
+        "Name": "Kamegara",
+        "address" : "270 Nguyễn Thái Sơn, Phường 4, Gò Vấp, Hồ Chí Minh 727900, Vietnam",
+        "latitude" : "10.821334",
+        "longtitude": "106.684855"
+    },
+    
+    "14": {
+        "Name": "Công Ty Cp Đầu Tư Công Nghệ Trường Minh",
+        "address" : "75 Lê Lợi, Phường 4, Gò Vấp, Hồ Chí Minh, Vietnam",
+        "latitude" : "10.819975",
+        "longtitude": "106.686251"
+    },
+
+    "15": {
+        "Name": "undefined",
+        "address" : "Đường số 2, Gò Vấp, Hồ Chí Minh, Vietnam",
+        "latitude" : "10.8204",
+        "longtitude": "106.6856"
+    },
+
+    "16": {
+        "Name": "undefined",
+        "address" : "Đường số 2, Gò Vấp, Hồ Chí Minh, Vietnam",
+        "latitude" : "10.82",
+        "longtitude": "106.6853"
+    },
+
+    "17": {
+        "id": "17",
+        "Name": "undefined",
+        "address" : "Đường số 2, Gò Vấp, Hồ Chí Minh, Vietnam",
+        "latitude" : "10.8206",
+        "longtitude": "106.6853"
+    },
+
+    "18": {
+        "Name": "undefined",
+        "address" : "Đường số 2, Gò Vấp, Hồ Chí Minh, Vietnam",
+        "latitude" : "10.8204",
+        "longtitude": "106.6849"
+    },
+
+    "19": {
+        "Name": "undefined",
+        "address" : "Đường số 2, Gò Vấp, Hồ Chí Minh, Vietnam",
+        "latitude" : "10.8206",
+        "longtitude": "106.6847"
+    },
+
+    "20": {
+        "Name": "undefined",
+        "address" : "Đường số 2, Gò Vấp, Hồ Chí Minh, Vietnam",
+        "latitude" : "10.8207",
+        "longtitude": "106.6848"
+    },
+
+    "21": {
+        "Name": "undefined",
+        "address" : "Đường số 2, Gò Vấp, Hồ Chí Minh, Vietnam",
+        "latitude" : "10.821",
+        "longtitude": "106.6844"
+    },
+
+    "22": {
+        "Name": "undefined",
+        "address" : "Đường số 2, Gò Vấp, Hồ Chí Minh, Vietnam",
+        "latitude" : "10.8212",
+        "longtitude": "106.6842"
+    }
+}
+
