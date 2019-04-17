@@ -226,7 +226,7 @@
         "to": "11",
         "distance": "104",
         "traveltime": "16",
-        "trafficflow": "80",
+        "trafficflow": "0",
         "maxflow": "100"
     },
     
@@ -407,7 +407,7 @@
         "to": "18",
         "distance": "51",
         "traveltime": "8",
-        "trafficflow": "0",
+        "trafficflow": "80",
         "maxflow": "100"
     },
     
@@ -417,7 +417,7 @@
         "to": "17",
         "distance": "51",
         "traveltime": "8",
-        "trafficflow": "0",
+        "trafficflow": "80",
         "maxflow": "100"
     },
 

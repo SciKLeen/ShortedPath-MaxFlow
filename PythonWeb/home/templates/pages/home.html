@@ -1,25 +1,10 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="UTF-8">
-    <title>Maps Routing Electron</title>
-    <style>
-       #map {
-        height: 100vh;
-        width: 100vw;
-       }
-    </style>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/css/materialize.min.css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="../static/main.css">
-    <link rel="stylesheet" type="text/css" href="https://js.api.here.com/v3/3.0/mapsjs-ui.css?dp-version=1549984893" />
+{% extends "pages/base.html" %}
 
-    <script type="text/javascript" src="https://js.api.here.com/v3/3.0/mapsjs-core.js"></script>
-    <script type="text/javascript" src="https://js.api.here.com/v3/3.0/mapsjs-service.js"></script>
-    <script type="text/javascript" src="https://js.api.here.com/v3/3.0/mapsjs-ui.js"></script>
-    <script type="text/javascript" src="https://js.api.here.com/v3/3.0/mapsjs-mapevents.js"></script>
-  </head>
-  <body>
+{% block title %}
+    Home
+{% endblock  %}
+
+{% block content %}
     <div class="input-container">
       <form name="mapsForm">
         <div class="form-group">
@@ -56,32 +41,55 @@
       });
 
       // Drawing line in map by ---------------------------------------------------------------------------------------
-      function addPolylineToMap(map, lstPoint) {
+      function addPolylineToMap(map, lstPoint, _col) {
         var lineString = new H.geo.LineString();
         // var lstPoint = [[10.8191594, 106.6867526], [10.8262926, 106.6893101], [10.8222614, 106.6944201], [10.8273340, 106.6881662 ]];
         
         for(var i = 0; i < lstPoint.length; i++)
-          addmakerforLine(lstPoint[i][0], lstPoint[i][1]),
+        { 
+          if ((i > 0 && i < lstPoint.length -1) || _col == "#ff0000"){
+            addmarkerforLine(lstPoint[i][0], lstPoint[i][1], "Dark blue")
+          }
+          else{
+            addmarkerforLine(lstPoint[i][0], lstPoint[i][1], "Grey")
+          }
           lineString.pushPoint({lat: lstPoint[i][0], lng: lstPoint[i][1]});
+        }
 
-        map.addObject(new H.map.Polyline(
-          lineString, { style: { lineWidth: 4 }}
+        map.addObject(
+          new H.map.Polyline(lineString, { 
+            style: { 
+              lineWidth: 4,
+              strokeColor: _col
+            }
+          }
         ));
       } 
       /**
       * Creates a series of H.map.Marker points from the route and adds them to the map.
       * @param {Object} route  A route as received from the H.service.RoutingService
       */
-      function addmakerforLine(_lat, _lng){
-        var svgMarkup = '<svg width="18" height="18" ' +
-          'xmlns="http://www.w3.org/2000/svg">' +
-          '<circle cx="8" cy="8" r="8" ' +
-            'fill="#1b468d" stroke="white" stroke-width="1"  />' +
-          '</svg>',
-          dotIcon = new H.map.Icon(svgMarkup, {anchor: {x:8, y:8}}),
-          group = new  H.map.Group(),
-          i,
-          j;
+      function addmarkerforLine(_lat, _lng, _col){
+        if(_col == "Dark blue")
+          var svgMarkup = '<svg width="18" height="18" ' +
+            'xmlns="http://www.w3.org/2000/svg">' +
+            '<circle cx="8" cy="8" r="8" ' +
+              'fill="#1b468d" stroke="white" stroke-width="1"  />' +
+            '</svg>',
+            dotIcon = new H.map.Icon(svgMarkup, {anchor: {x:8, y:8}}),
+            group = new  H.map.Group(),
+            i,
+            j;
+        else
+          var svgMarkup = '<svg width="18" height="18" ' +
+              'xmlns="http://www.w3.org/2000/svg">' +
+              '<circle cx="8" cy="8" r="8" ' +
+                'fill="#636465" stroke="white" stroke-width="1"  />' +
+              '</svg>',
+              dotIcon = new H.map.Icon(svgMarkup, {anchor: {x:8, y:8}}),
+              group = new  H.map.Group(),
+              i,
+              j;
         
         //maneuver = route.leg[i].maneuver[j];
         // Add a marker to the maneuvers group
@@ -162,43 +170,23 @@
 
       
 
-      lstPoint = [
-        [10.8232, 106.6859], 
-        [10.8226, 106.6865],
-        [10.822, 106.6869], 
-        [10.8208, 106.6874], 
-        [10.8218, 106.6886], 
-        [10.822765, 106.688185], 
-        [10.824180, 106.686644], 
-        [10.820631, 106.687259], 
-        [10.820131, 106.686364], 
-        [10.821301, 106.685254],
-        [10.821777, 106.685863], 
-        [10.822315, 106.685160],
-        [10.821533, 106.684590], 
-        [10.821334, 106.684855], 
-        [10.819975, 106.686251], 
-        [10.8204, 106.6856], 
-        [10.82, 106.6853], 
-        [10.8206, 106.6853], 
-        [10.8204, 106.6849], 
-        [10.8206, 106.6847],
-        [10.8207, 106.6848], 
-        [10.821, 106.6844], 
-        [10.8212, 106.6842]
+      path1 = [
+      [10.82418, 106.686644], [10.8232, 106.6859], [10.8226, 106.6865], [10.822, 106.6869], [10.8208, 106.6874]
       ];
 
-      function marketList(lstPoint)
-      {
-        for(var i = 0; i < lstPoint.length; i++)
-        {
-          addmakerforLine(lstPoint[i][0], lstPoint[i][1]);
-        }
-      }
+      path2 = [
+      [10.82418, 106.686644], [10.822765, 106.688185], [10.8218, 106.6886], [10.8208, 106.6874]
+      ]
+
+      Max_flow = [
+      [10.82418, 106.686644], [10.8232, 106.6859]
+      ]
+
+
 
       initMap();
-      marketList(lstPoint);
-      //addPolylineToMap(map, lstPoint);
+      addPolylineToMap(map, path1, "#1b468d");
+      addPolylineToMap(map, path2, "#ffff00");
+      addPolylineToMap(map, Max_flow, "#ff0000");
     </script>
-  </body>
-</html>
+{% endblock  %}
