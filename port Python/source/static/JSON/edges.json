@@ -1,0 +1,342 @@
+{
+    "00 01": {
+        "address" : "Nguyễn Văn Bảo",
+        "from": "00",
+        "to": "01",
+        "distance": "109",
+        "traveltime": "17",
+        "trafficflow": "0",
+        "maxflow": "100"
+    },
+    
+    "01 00": {
+        "address" : "Nguyễn Văn Bảo",
+        "from": "01",
+        "to": "00",
+        "distance": "109",
+        "traveltime": "17",
+        "trafficflow": "0",
+        "maxflow": "100"
+    },
+
+    "01 02": {
+        "address" : "Nguyễn Văn Bảo",
+        "from": "01",
+        "to": "02",
+        "distance": "88",
+        "traveltime": "14",
+        "trafficflow": "0",
+        "maxflow": "100"
+    },
+    
+    "02 01": {
+        "address" : "Nguyễn Văn Bảo",
+        "from": "02",
+        "to": "01",
+        "distance": "88",
+        "traveltime": "14",
+        "trafficflow": "0",
+        "maxflow": "100"
+    },
+
+    "02 03": {
+        "address" : "Nguyễn Văn Bảo",
+        "from": "02",
+        "to": "03",
+        "distance": "152",
+        "traveltime": "24",
+        "trafficflow": "0",
+        "maxflow": "100"
+    },
+    
+    "03 02": {
+        "address" : "Nguyễn Văn Bảo",
+        "from": "03",
+        "to": "02",
+        "distance": "152",
+        "traveltime": "24",
+        "trafficflow": "0",
+        "maxflow": "100"
+    },
+
+    "03 04": {
+        "address" : "Lê Lợi",
+        "from": "03",
+        "to": "04",
+        "distance": "177",
+        "traveltime": "28",
+        "trafficflow": "0",
+        "maxflow": "100"
+    },
+    
+    "04 03": {
+        "address" : "Lê Lợi",
+        "from": "04",
+        "to": "03",
+        "distance": "177",
+        "traveltime": "28",
+        "trafficflow": "0",
+        "maxflow": "100"
+    },
+
+    "04 05": {
+        "address" : "Nguyễn Văn Nghi",
+        "from": "04",
+        "to": "05",
+        "distance": "112",
+        "traveltime": "16",
+        "trafficflow": "0",
+        "maxflow": "100"
+    },
+    
+    "05 04": {
+        "address" : "Nguyễn Văn Nghi",
+        "from": "05",
+        "to": "04",
+        "distance": "112",
+        "traveltime": "16",
+        "trafficflow": "0",
+        "maxflow": "100"
+    },
+
+    "05 06": {
+        "address" : "Nguyễn Văn Nghi",
+        "from": "05",
+        "to": "06",
+        "distance": "262",
+        "traveltime": "50",
+        "trafficflow": "0",
+        "maxflow": "100"
+    },
+    
+    "06 05": {
+        "address" : "Nguyễn Văn Nghi",
+        "from": "06",
+        "to": "05",
+        "distance": "262",
+        "traveltime": "50",
+        "trafficflow": "0",
+        "maxflow": "100"
+    },
+
+    "06 00": {
+        "address" : "Nguyễn Thái Sơn",
+        "from": "06",
+        "to": "00",
+        "distance": "146",
+        "traveltime": "37",
+        "trafficflow": "80",
+        "maxflow": "100"
+    },
+    
+    "00 06": {
+        "address" : "Nguyễn Thái Sơn",
+        "from": "00",
+        "to": "06",
+        "distance": "146",
+        "traveltime": "37",
+        "trafficflow": "80",
+        "maxflow": "100"
+    },
+
+
+    "07 03": {
+        "address" : "Lê Lợi",
+        "from": "07",
+        "to": "03",
+        "distance": "24",
+        "traveltime": "4",
+        "trafficflow": "0",
+        "maxflow": "100"
+    },
+    
+    "03 07": {
+        "address" : "Lê Lợi",
+        "from": "03",
+        "to": "07",
+        "distance": "24",
+        "traveltime": "4",
+        "trafficflow": "0",
+        "maxflow": "100"
+    },
+
+    "07 08": {
+        "address" : "Lê Lợi",
+        "from": "07",
+        "to": "08",
+        "distance": "118",
+        "traveltime": "21",
+        "trafficflow": "0",
+        "maxflow": "100"
+    },
+    
+    "08 07": {
+        "address" : "Lê Lợi",
+        "from": "08",
+        "to": "07",
+        "distance": "118",
+        "traveltime": "21",
+        "trafficflow": "0",
+        "maxflow": "100"
+    },
+
+    "09 08": {
+        "address" : "Đường số 1",
+        "from": "09",
+        "to": "08",
+        "distance": "184",
+        "traveltime": "29",
+        "trafficflow": "0",
+        "maxflow": "100"
+    },
+    
+    "08 09": {
+        "address" : "Đường số 1",
+        "from": "08",
+        "to": "09",
+        "distance": "184",
+        "traveltime": "29",
+        "trafficflow": "0",
+        "maxflow": "100"
+    },
+
+    "10 09": {
+        "address" : "Hẻm 54 số 1",
+        "from": "10",
+        "to": "09",
+        "distance": "86",
+        "traveltime": "13",
+        "trafficflow": "0",
+        "maxflow": "100"
+    },
+    
+    "09 10": {
+        "address" : "Hẻm 54 số 1",
+        "from": "09",
+        "to": "10",
+        "distance": "86",
+        "traveltime": "13",
+        "trafficflow": "0",
+        "maxflow": "100"
+    },
+
+    "10 11": {
+        "address" : "Hẻm 304 Nguyễn Thái Sơn",
+        "from": "10",
+        "to": "11",
+        "distance": "104",
+        "traveltime": "16",
+        "trafficflow": "80",
+        "maxflow": "100"
+    },
+    
+    "11 10": {
+        "address" : "Hẻm 304 Nguyễn Thái Sơn",
+        "from": "11",
+        "to": "10",
+        "distance": "104",
+        "traveltime": "16",
+        "trafficflow": "0",
+        "maxflow": "100"
+    },
+
+    "00 11": {
+        "address" : "Nguyễn Thái Sơn",
+        "from": "00",
+        "to": "11",
+        "distance": "127",
+        "traveltime": "17",
+        "trafficflow": "0",
+        "maxflow": "100"
+    },
+    
+    "11 00": {
+        "address" : "Nguyễn Thái Sơn",
+        "from": "11",
+        "to": "00",
+        "distance": "127",
+        "traveltime": "17",
+        "trafficflow": "0",
+        "maxflow": "100"
+    },
+
+    "11 12": {
+        "address" : "Nguyễn Thái Sơn",
+        "from": "11",
+        "to": "12",
+        "distance": "134",
+        "traveltime": "35",
+        "trafficflow": "0",
+        "maxflow": "100"
+    },
+    
+    "12 11": {
+        "address" : "Nguyễn Thái Sơn",
+        "from": "12",
+        "to": "11",
+        "distance": "134",
+        "traveltime": "35",
+        "trafficflow": "0",
+        "maxflow": "100"
+    },
+
+    "12 13": {
+        "address" : "Đường số 1",
+        "from": "12",
+        "to": "13",
+        "distance": "47",
+        "traveltime": "7",
+        "trafficflow": "0",
+        "maxflow": "100"
+    },
+    
+    "13 12": {
+        "address" : "Đường số 1",
+        "from": "13",
+        "to": "12",
+        "distance": "47",
+        "traveltime": "7",
+        "trafficflow": "0",
+        "maxflow": "100"
+    },
+
+    "13 09": {
+        "address" : "Đường số 1",
+        "from": "13",
+        "to": "09",
+        "distance": "53",
+        "traveltime": "8",
+        "trafficflow": "0",
+        "maxflow": "100"
+    },
+    
+    "09 13": {
+        "address" : "Đường số 1",
+        "from": "09",
+        "to": "13",
+        "distance": "53",
+        "traveltime": "8",
+        "trafficflow": "0",
+        "maxflow": "100"
+    },
+
+    "08 14": {
+        "address" : "Lê Lợi",
+        "from": "08",
+        "to": "14",
+        "distance": "14",
+        "traveltime": "2",
+        "trafficflow": "0",
+        "maxflow": "100"
+    },
+    
+    "14 08": {
+        "address" : "Lê Lợi",
+        "from": "14",
+        "to": "08",
+        "distance": "14",
+        "traveltime": "2",
+        "trafficflow": "0",
+        "maxflow": "100"
+    }
+}

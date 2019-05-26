@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="initial-scale=1.0, width=device-width" />
+</head>
+<body>
+  <div id="map" style="width: 100%; height: 400px; background: grey" />
+  <script  type="text/javascript" charset="UTF-8" >
+    function Save(){
+        //console.log("line =" + line)
+        const Data = {
+          name: "123",
+          id: 123
+        };
+        
+        const url ="http://127.0.0.1:5000/admin"
+        const otherParam={
+          headers:{
+            "content-type":"application/json; charset=UTF-8"
+          },
+          body:Data,
+          method:"POST"
+        }
+
+        fetch(url, otherParam)
+        .then(data=>{return data.json()})
+        .then(res=>{console.log(res)})
+        .catch(error=>console.log(error))
+      }
+      Save()
+  </script>
+</body>
+</html>

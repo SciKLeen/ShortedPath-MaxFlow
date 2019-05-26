@@ -1,0 +1,16 @@
+$.getJSON( "static/JSON/flows.json", function( json ) {
+                  console.log(json[0]['flowOrigin']);
+                  line =  json.length;
+                  for(var i = 0; i < json.length; i++){
+                    var row = table.insertRow(i + 1);
+                    var cell0 = row.insertCell(0);
+                    var cell1 = row.insertCell(1);
+                    var cell2 = row.insertCell(2);
+                    cell0.innerHTML = '<input type="text" disabled value="' + json[i]['flowOrigin'] + '" placeholder="Origin">';
+                    cell1.innerHTML = '<input type="text" disabled value="' + json[i]['flowDestination'] + '"  placeholder="Destination">';
+
+                    str0 = "<a href='#' class='btn btn-danger btn-xs'>edit</a>"
+                    str1 = "<a href='#' class='btn btn-danger btn-xs'>delete</a>"
+                    cell2.innerHTML = str0 + str1;
+                  }
+              });
