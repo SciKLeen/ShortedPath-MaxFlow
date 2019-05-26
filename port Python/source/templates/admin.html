@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Maps Routing Electron</title>
+    <style>
+       #map {
+        height: 100vh;
+        width: 100vw;
+       }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/css/materialize.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../static/CSS/admin.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script type=text/javascript src="{{url_for('static', filename='JS/admin.js') }}"></script>
+  </head>
+  <body>
+    <div>
+      <h1 color="#6699FF">Traffic Flow</h1>
+      <input type="text" id="search" onkeyup="Search()" placeholder="Search for names..">
+      <table id="tbl">
+        <thead>
+            <tr style="background-color:grey">
+                <th></th>
+                <th>Street</th>
+                <th>Origin</th>
+                <th>Destination</th>
+                <th>Traffic Flow</th>
+                <th>Max Flow</th>
+                <th>Status</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+
+        </tbody>
+      </table>
+      <div class="btn_div">
+        <button id="Save" class="btn btn_save" type="submit" onclick="Save()">
+          Save
+        </button>
+      </div>
+      <script>
+        var line = 0;
+        var index, table = document.getElementById("tbl");
+        var data = []
+
+        function __init__(){
+          // get data from /admin render
+          {% if accept %}
+            function getData(flows){
+              console.log("Yollow");
+              data = flows
+              for(var i = 0; i< data.length; i++){
+              console.log("LOL");
+                var row = table.insertRow(i + 1);
+                var cell0 = row.insertCell(0);
+                var cell1 = row.insertCell(1);
+                var cell2 = row.insertCell(2);
+                var cell3 = row.insertCell(3);
+                var cell4 = row.insertCell(4);
+                var cell5 = row.insertCell(5);
+                var cell6 = row.insertCell(6);
+                cell0.innerHTML = "<b>" + i + "</b>";
+                cell1.innerHTML = data[i]['street']
+                cell2.innerHTML = data[i]['origin_street']// '<input type="text" disabled value="' + data[i]['origin_street'] + '" placeholder="Origin">';
+                cell3.innerHTML = data[i]['destination_street']// '<input type="text" disabled value="' + data[i]['destination_street'] + '"  placeholder="Destination">';
+                cell4.innerHTML = '<input class="Flow" type="number" value="' + data[i]['trafficflow'] + '" placeholder="Origin">';
+                cell5.innerHTML = data[i]['maxflow']// '<input type="text" disabled value="' + data[i]['maxflow'] + '"  placeholder="Destination">';
+                cell6.innerHTML = data[i]['stated']
+                //str1 = '<input class="btn btn-danger btn-xs" type="button" value="delete">'
+
+                //cell5.innerHTML = str1;
+                cell0.width = "60px";
+              }
+              line = data.length
+            }
+            getData({{ flows|safe }})
+          {% endif %}
+        }
+
+        function Add_Row() {
+              origin = document.getElementById("origin");
+              destination = document.getElementById("destination");
+              if(origin.value == "" || destination.value == ""){
+                if(origin.value == ""){
+                  alert("Origin is not null");
+                }
+                else{
+                  alert("Destination is not null");
+                }
+              }
+              else{
+                var row = table.insertRow(line + 1);
+                var cell0 = row.insertCell(0);
+                var cell1 = row.insertCell(1);
+                var cell2 = row.insertCell(2);
+                cell0.innerHTML = '<input type="text" disabled value = "' + origin.value + '" placeholder="Origin">';
+                cell1.innerHTML = '<input type="text" disabled value = "' + destination.value + '" placeholder="Destination">';
+
+                //str0 = "<a href='#' class='btn btn-danger btn-xs'>edit</a>"
+                str1 = '<input class="btn btn-danger btn-xs" type="button" value="delete">'
+                
+
+                cell2.innerHTML = str1;
+                line ++;
+                //console.log(line);
+
+                //add to data json
+                data.push({"flowOrigin": origin.value, "flowDestination": destination.value})
+
+                origin.value = "";
+                destination.value = "";
+              }
+        }
+
+        function Search() {
+          // Declare variables 
+          var input, filter, table, tr, td, i, txtValue;
+          input = document.getElementById("search");
+          filter = input.value.toUpperCase();
+          table = document.getElementById("tbl");
+          tr = table.getElementsByTagName("tr");
+
+          // Loop through all table rows, and hide those who don't match the search query
+          for (i = 0; i < tr.length; i++) {
+            tdOri = tr[i].getElementsByTagName("td")[1];
+            //tdDes = tr[i].getElementsByTagName("td")[2];
+            if (tdOri) {
+              txtValue = tdOri.textContent || tdOri.innerText;
+              if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                tr[i].style.display = "";
+              } else {
+                tr[i].style.display = "none";
+              }
+            } 
+          }
+        }
+
+        function postAPI(data){
+          $.post( "/admin", {
+              canvas_data: JSON.stringify(data)
+            }, function(err, req, resp){
+              window.location.href = "/results/"+resp["responseJSON"]["uuid"];
+            });
+        }
+
+        function Save(){
+          var input, filter, table, tr, tdFlow, i, txtValue;
+          table = document.getElementById("tbl");
+          
+          tr = table.getElementsByTagName("tr");
+          for (i = 1; i < tr.length; i++) {
+            tdFlow = tr[i].getElementsByTagName("td")[4];
+            tdMax = tr[i].getElementsByTagName("td")[5];
+            input = tdFlow.getElementsByTagName("input")[0].value;
+            //console.log(tdMax.textContent, input)
+            if(parseFloat(tdMax.textContent) < parseFloat(input))
+              input.innerHTML = data[i-1]['trafficflow']
+            else
+              data[i-1]['trafficflow'] = input;
+
+            var traf, maxf;
+            traf = parseFloat(data[i - 1]['trafficflow']);
+            maxf = parseFloat(data[i - 1]['maxflow']);
+            if((traf / maxf) * 100 >= 80)
+            data[i - 1]['stated'] = "1";
+            else
+            data[i - 1]['stated'] = "0";
+          }       
+          postAPI(data)
+          alert('Success')
+        }
+
+        function SomeDeleteRowFunction(){
+          $('table').on('click', 'input[type="button"]', function(e){
+            var row_index = $(this).closest('tr').index() - 1;         
+            $(this).closest('tr').remove()
+            data.splice(row_index, 1);
+            console.log(data)
+            line --;
+          })
+        }
+
+        __init__()
+        SomeDeleteRowFunction()
+        </script>
+    </div>
+  </body>
+</html>

@@ -11,9 +11,11 @@
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/css/materialize.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="../static/main.css">
+    <link rel="stylesheet" href="../static/CSS/main.css">
     <link rel="stylesheet" type="text/css" href="https://js.api.here.com/v3/3.0/mapsjs-ui.css?dp-version=1549984893" />
+
     
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script type="text/javascript" src="https://js.api.here.com/v3/3.0/mapsjs-core.js"></script>
     <script type="text/javascript" src="https://js.api.here.com/v3/3.0/mapsjs-service.js"></script>
@@ -24,17 +26,16 @@
     <div class="input-container">
       <form name="mapsForm" action="" method="post">
         <div class="form-group">
-          <div class="label">latitude</div>
-          <!-- <input id="origin" type="text" class="form-control" placeholder="Origin" /> -->
-          <input id="latitude" type="text" class="form-control" name="Latitude" placeholder="Origin" value="{{
-          request.form.Latitude }}" />
-          <!-- <input id="origin-longitude" type="text" class="form-control" placeholder="Longitude" value="107.608579" /> -->
+          <div class="label"><b>Origin</b></div>
+          <input id="Origin" type="text" class="form-control" name="Origin" placeholder="Origin" value="{{
+          origin }}" />
+          <div style="color:red; font-weight: bold">{{ errorOri }}</div>
         </div>
         <div class="form-group">
-          <div class="label">Longitude</div>
-          <!-- <input id="destination" type="text" class="form-control" placeholder="Destination" /> -->
-          <input id="longtitude" type="text" class="form-control" name="Longtitude" placeholder="Destination" value="{{
-          request.form.Longtitude }}" />
+          <div class="label"><b>Destination</b></div>
+          <input id="Destination" type="text" class="form-control" name="Destination" placeholder="Destination" value="{{
+          destination }}" />
+          <div style="color:red; font-weight: bold">{{ errorDes }}</div>
           <!-- <input id="destination-longitude" type="text" class="form-control" placeholder="Longitude" value="107.611776"/> -->
         </div>
         <!-- <div class="form-group">
@@ -50,13 +51,40 @@
         </div>
       </form>
     </div>
-    <div id="map"></div> 
+    <div class="input-con" id="panel">
+
+    </div>
+    <div id="map">
+    </div> 
+     <!--||----------------------------------------------------- SCRIPT ---------------------------------------------------------||-->
     <script type="text/javascript" charset="UTF-8">
-      var lat, lng, map;
       var platform = new H.service.Platform({
-        'app_id': '<app_id>',
-        'app_code': '<app_code>'
+        app_id: 'Ige7JOFlW37fkn9EUKIw',
+        app_code: '4-Nu6-kvpkjHtOHrqjwu8A',
+        useHTTPS: true
       });
+
+      //Add marker
+      function addMarkerToGroup(group, coordinate, html, _col) {
+        //console.log(_col)
+        if(_col == "Dark blue")
+          var svgMarkup = '<svg width="18" height="18" ' + 'xmlns="http://www.w3.org/2000/svg">' + '<circle cx="8" cy="8" r="8" ' + 'fill="#1b468d" stroke="white" stroke-width="1"  />' + '</svg>',
+            dotIcon = new H.map.Icon(svgMarkup, {anchor: {x:8, y:8}}),
+            i,
+            j;
+        else
+          var svgMarkup = '<svg width="18" height="18" ' + 'xmlns="http://www.w3.org/2000/svg">' + '<circle cx="8" cy="8" r="8" ' + 'fill="#636465" stroke="white" stroke-width="1"  />' + '</svg>',
+          dotIcon = new H.map.Icon(svgMarkup, {anchor: {x:8, y:8}})
+          var marker = new H.map.Marker(
+            coordinate,
+            {
+              icon: dotIcon
+            }
+          );
+        // add custom data to the marker
+        marker.setData(html);
+        group.addObject(marker);
+      }
 
       // Drawing line in map by ---------------------------------------------------------------------------------------
       function addPolylineToMap(map, lstPoint, _col) {
@@ -65,172 +93,256 @@
         
         for(var i = 0; i < lstPoint.length; i++)
         { 
-          if (_col != "#ff0000")
-            if ((i > 0 && i < lstPoint.length -1)){
-              addmarkerforLine(lstPoint[i][0], lstPoint[i][1], "Dark blue")
-            }
-            else{
-              addmarkerforLine(lstPoint[i][0], lstPoint[i][1], "Grey")
-            }
-          lineString.pushPoint({lat: lstPoint[i][0], lng: lstPoint[i][1]});
+          _lat = parseFloat(lstPoint[i]['latitude']);
+          _lon = parseFloat (lstPoint[i]["longtitude"]);
+          coordinate = {lat: _lat, lng: _lon};
+          lineString.pushPoint(coordinate);
         }
 
         map.addObject(
           new H.map.Polyline(lineString, { 
             style: { 
-              lineWidth: 4,
+              lineWidth: 10,
               strokeColor: _col
             }
           }
         ));
-      } 
-      /**
-      * Creates a series of H.map.Marker points from the route and adds them to the map.
-      * @param {Object} route  A route as received from the H.service.RoutingService
-      */
-      function addmarkerforLine(_lat, _lng, _col){
-        if(_col == "Dark blue")
-          var svgMarkup = '<svg width="18" height="18" ' +
-            'xmlns="http://www.w3.org/2000/svg">' +
-            '<circle cx="8" cy="8" r="8" ' +
-              'fill="#1b468d" stroke="white" stroke-width="1"  />' +
-            '</svg>',
-            dotIcon = new H.map.Icon(svgMarkup, {anchor: {x:8, y:8}}),
-            group = new  H.map.Group(),
-            i,
-            j;
-        else
-          var svgMarkup = '<svg width="18" height="18" ' +
-              'xmlns="http://www.w3.org/2000/svg">' +
-              '<circle cx="8" cy="8" r="8" ' +
-                'fill="#636465" stroke="white" stroke-width="1"  />' +
-              '</svg>',
-              dotIcon = new H.map.Icon(svgMarkup, {anchor: {x:8, y:8}}),
-              group = new  H.map.Group(),
-              i,
-              j;
-        
-        //maneuver = route.leg[i].maneuver[j];
-        // Add a marker to the maneuvers group
-        var marker =  new H.map.Marker({
-          lat: _lat,
-          lng: _lng},
-          {
-            icon: dotIcon
-          }
-        );
-          //marker.instruction = maneuver.instruction;
-          map.addObject(marker);
-
-        // group.addEventListener('tap', function (evt) {
-        //   map.setCenter(evt.target.getPosition());
-        //   openBubble(
-        //     evt.target.getPosition(), evt.target.instruction);
-        // }, false);
-
-        // // Add the maneuvers group to the map
-        // map.addObject(group);
       }
-      
+
       // Click event map
-      function addClickEventListenerToMap(map) {
-        // add 'tap' listener
-        map.addEventListener('tap', function (evt) {
-          //var coords =  [evt.currentPointer.viewportX, evt.currentPointer.viewportY];
-          var coords =  map.screenToGeo(evt.currentPointer.viewportX, evt.currentPointer.viewportY);
-          //alert(coords.value);
-          
-          var setMarker = new H.map.Marker({lat:coords.lat, lng:coords.lng});
-          map.addObject(setMarker);
-          //alert(typeof (coords.lat))
+      function addInfoBubble(map, group, lstPoint, __origin, __destination) {
+        // add 'tap' event listener, that opens info bubble, to the group
+        group.addEventListener('tap', function (evt) {
+          // event target is the marker itself, group is a parent event target
+          // for all objects that it contains
+          var bubble =  new H.ui.InfoBubble(evt.target.getPosition(), {
+            // read custom data
+            content: evt.target.getData()
+          });
+          // show info bubble
+          ui.addBubble(bubble);
         }, false);
+
+        for(var i = 0; i < lstPoint.length; i++)
+        {
+          _lat = parseFloat(lstPoint[i]['latitude']);
+          _lon = parseFloat (lstPoint[i]["longtitude"]);
+          coordinate = {lat: _lat, lng: _lon};
+          if(lstPoint[i]['Name'] != __origin['Name'] && lstPoint[i]['Name'] != __destination['Name'])
+          {
+            //console.log( lstPoint[i]['Name'] + '_' + __origin['Name'] + '_' + __destination['Name'] + '*')
+            addMarkerToGroup(group, coordinate, '<div><b>Address:</b><br>' + lstPoint[i]['address'] + '</div>', "Dark blue");
+          }
+          else
+          {
+
+          }
+        }
       }
+
+      function addManueversToMap(route){
+        var svgMarkup = '<svg width="18" height="18" ' +
+          'xmlns="http://www.w3.org/2000/svg">' +
+          '<circle cx="8" cy="8" r="8" ' +
+            'fill="#1b468d" stroke="white" stroke-width="1"  />' +
+          '</svg>',
+          dotIcon = new H.map.Icon(svgMarkup, {anchor: {x:8, y:8}}),
+          group = new  H.map.Group(),
+          i,
+          j;
+
+        // Add a marker for each maneuver
+        for (i = 0;  i < route.leg.length; i += 1) {
+          for (j = 0;  j < route.leg[i].maneuver.length; j += 1) {
+            // Get the next maneuver.
+            maneuver = route.leg[i].maneuver[j];
+            // Add a marker to the maneuvers group
+            var marker =  new H.map.Marker({
+              lat: maneuver.position.latitude,
+              lng: maneuver.position.longitude} ,
+              {icon: dotIcon});
+            marker.instruction = maneuver.instruction;
+            group.addObject(marker);
+          }
+        }
+
+        group.addEventListener('tap', function (evt) {
+          map.setCenter(evt.target.getPosition());
+          openBubble(
+            evt.target.getPosition(), evt.target.instruction);
+        }, false);
+
+        // Add the maneuvers group to the map
+        map.addObject(group);
+      }
+
+      //function showData(path, distance0, distance1){
+      //  var layer = document.getElementById("panel");
+      //  var str = ""
+        //for(var i = 0; i < path.length; i++)
+        //{
+          //str += '<p class="div_cmt">' + path[i]['address'] + '</p>';
+        //  }
+      //  str += "<b>Total distance: </b>" + distance1 + "m.";
+      //}
+
       //Move map to latitude and longtitude ----------------------------------------------------------------------------
-      function moveMap(map, _lat, _lng){
-        map.setCenter({lat:_lat, lng:_lng});
-        map.setZoom(14);
-      }
+      //function moveMap(map, _lat, _lng){
+      //  map.setCenter({lat:_lat, lng:_lng});
+      //  map.setZoom(14);
+      //}
       //Create map========================================================================================================    
-      function initMap() {
-        //Step 1: initialize communication with the platform
-        var pixelRatio = window.devicePixelRatio || 1;
-        var defaultLayers = platform.createDefaultLayers({
-          tileSize: pixelRatio === 1 ? 256 : 512,
-          ppi: pixelRatio === 1 ? undefined : 320
-        });
+      // initialize comunication with the platform
 
-        //Step 2: initialize a map  - not specificing a location will give a whole world view.
-        lat = 10.822258;
-        lng = 106.687443;
- 
-        map = new H.Map(document.getElementById('map'),
+      //Step 1: initialize communication with the platform
+      var pixelRatio = window.devicePixelRatio || 1;
+      var defaultLayers = platform.createDefaultLayers({
+        tileSize: pixelRatio === 1 ? 256 : 512,
+        ppi: pixelRatio === 1 ? undefined : 320
+      });
+
+      //Step 2: initialize a map  - not specificing a location will give a whole world view.
+      var map = new H.Map(document.getElementById('map'),
         defaultLayers.normal.map, {
-          pixelRatio: pixelRatio,
-        });
+        center: {lat: 10.822258, lng: 106.687443},
+        zoom: 14,
+        pixelRatio: pixelRatio,
+      });
 
-        //Step 3: make the map interactive
-        // MapEvents enables the event system
-        // Behavior implements default interactions for pan/zoom (also on mobile touch environments)
-        var behavior = new H.mapevents.Behavior(new H.mapevents.MapEvents(map));
+      //Step 3: make the map interactive
+      // MapEvents enables the event system
+      // Behavior implements default interactions for pan/zoom (also on mobile touch environments)
+      var behavior = new H.mapevents.Behavior(new H.mapevents.MapEvents(map));
 
-        // Create the default UI components
-        var ui = H.ui.UI.createDefault(map, defaultLayers);
+       // Create the default UI components
+       var ui = H.ui.UI.createDefault(map, defaultLayers);
+          
+      // load data point and marker
+      var group = new H.map.Group();
+      map.addObject(group);
+      //addInfoBubble(map, group);
+
+      function showDistance(lstPath, lst){
+        var logContainer = document.createElement('ul');
+        logContainer.className ='log';
         
-        moveMap(map, lat, lng);
-        //addClickEventListenerToMap(map);
+        var str = ''
+        for(var i = 0; i < lst.length; i++)
+        { 
+          if(i == 0)
+            str = str + '<li class="log-entry" style="font-size: 15px; background-color: "><b>Recommended: ' + lst[i] + ' m</b></li>';
+          else
+            str = str + '<li class="log-entry" style="font-size: 15px"><b>Distance ' + (i + 1) + ': ' + lst[i] + ' m</b></li>';
+          console.log(lstPath[i])
+          for(var j = 0; j < lstPath[i].length; j++)
+          {
+            console.log(lstPath[i][j]['address'])
+            str = str + '<li class="log-entry" style="padding-left: 15px">' + lstPath[i][j]['address'] + '</li>';
+          }
+        }
+        logContainer.innerHTML = str
+        var layer = document.getElementById("panel");
+        layer.appendChild(logContainer);
       }
 
       document.getElementById('submit').addEventListener('click', function() {
         submit()
       });
       function submit() {
-          
+          // POST REQUEST
       }
 
-      
-
-      //path1 = [
-      //[10.82418, 106.686644], [10.8232, 106.6859], [10.8226, 106.6865], [10.822, 106.6869], [10.8208, 106.6874]
-      //];
-
-      //path2 = [
-      //[10.82418, 106.686644], [10.822765, 106.688185], [10.8218, 106.6886], [10.8208, 106.6874]
-      //]
-
-      //Max_flow = [
-      //[10.82418, 106.686644], [10.8232, 106.6859]
-      //]
-
-
-
-      initMap();
-      //addPolylineToMap(map, path1, "#1b468d");
-      //addPolylineToMap(map, path2, "#ffff00");
-      //addPolylineToMap(map, Max_flow, "#ff0000");
-
+      // Action load line to map by jinja
       {% if accept %}
-        $.getJSON('static/respon1.json',function(data){
+        function getData(data){
+          //console.log(data[2]);
+          var d = data
           console.log(data[0])
+          console.log(data[1])
+          console.log(data[2])
+
           path1 = data[0];
           path2 = data[1];
-          Max_flow = data[2];
-
-          addPolylineToMap(map, path1, "#1b468d");
-          addPolylineToMap(map, path2, "#ffff00");
-          addPolylineToMap(map, Max_flow, "#ff0000");
+          path3 = data[2];
+          Max_flow = data[3];
           
-        });
+          var lscolor = ["#00008B", "#0033CC"];
+          var i = 0;
 
-        //var importStream = fs.createReadStream('static/respon1.json', {flags: 'r', encoding: 'utf-8'});
-        //importStream.on('data', function(chunk) {
+          // add line path 1
+          addPolylineToMap(map, path1, "#0033CC", lscolor[i], data[0][(data[0]).length - 1]);
+          // add buble and event click market
+          addInfoBubble(map, group, path1, data[0][0], data[0][(data[0]).length - 1])
 
-        //    var pleaseBeAJSObject = JSON.parse(chunk);           
-            // insert pleaseBeAJSObject in a database
-        //});
-        //importStream.on('end', function(item) {
-        //  console.log("Woot, imported objects into the database!");
-        //});
+          // add line path 2, 3
+          if(path2.length > 0){
+            lstPath = [path1, path2]
+            showDistance(lstPath, [data[5], data[4]]);
+            if(path3.length > 0){
+              addPolylineToMap(map, path3, lscolor[i], data[0][0], data[0][(data[0]).length - 1]);
+              addInfoBubble(map, group, path3, data[0][0], data[0][(data[0]).length - 1])
+
+              lstPath = [path1, path2, path3]
+              showDistance(lstPath, [data[6], data[5], data[4]]);
+              
+              i++;
+            }
+            addPolylineToMap(map, path2, lscolor[i], data[0][0], data[0][(data[0]).length - 1]);
+            addInfoBubble(map, group, path2, data[0][0], data[0][(data[0]).length - 1])
+            if(i == 0)
+              i++;
+            
+          }
+          else{
+            lstPath = [path1]
+            showDistance(lstPath, [data[4]]);
+          }
+
+          for(var i = 0; i < Max_flow.length; i++)
+          {
+            addPolylineToMap(map, Max_flow[i], "#ff0000", data[0][0], data[0][(data[0]).length - 1]);
+            //console.log("Yoloww")
+            //addInfoBubble(map, group, Max_flow, data[0][0], data[0][(data[0]).length - 1])
+          }
+
+          //Maker điểm đầu và điểm cuối
+          var latorg = parseFloat(path1[0]['latitude']);
+          var lonorg = parseFloat(path1[0]['longtitude']);
+          var latdes = parseFloat(path1[(data[0]).length - 1]['latitude']);
+          var londes = parseFloat(path1[(data[0]).length - 1]['longtitude']);
+
+          coordinate0 = {lat: latorg, lng: lonorg};
+          coordinate1 = {lat: latdes, lng: londes};
+
+          //addMarkerToGroup(group, coordinate0, '<div>' + data[0][0]['Name'] + '<br><br></div>' + '<div><b>Address:</b>' + data[0][0]['address'] + '</div>', "Grey");
+
+          var marker = new H.map.Marker(coordinate0);
+          // add custom data to the marker
+          marker.setData('<div><b>Address:</b><br>' + data[0][0]['address'] + '</div>');
+          group.addObject(marker);
+          //addMarkerToGroup(group, coordinate0, '<div>' + data[0][0]['Name'] + '<br><br></div>' + '<div><b>Address:</b>' + data[0][0]['address'] + '</div>', "Grey");
+
+          //addMarkerToGroup(group, coordinate1, '<div>' + data[0][(data[0]).length - 1]['Name'] + '<br><br></div>' + '<div><b>Address:</b>' + data[0][(data[0]).length - 1]['address'] + '</div>', "Grey");
+
+          var marker = new H.map.Marker(coordinate1);
+          // add custom data to the marker
+          marker.setData('<div><b>Address:</b><br>' + data[0][(data[0]).length - 1]['address'] + '</div>');
+          group.addObject(marker);
+          //addMarkerToGroup(group, coordinate1, '<div>' + data[0][(data[0]).length - 1]['Name'] + '<br><br></div>' + '<div><b>Address:</b>' + data[0][(data[0]).length - 1]['address'] + '</div>', "Grey");
+
+
+          //showData(path2, distance0, distance1);
+
+          //addmarkerforLine(latorg, lonorg, "Grey");
+          //addmarkerforLine(latdes, londes, "Grey");
+          //console.log('Distance0:' + { distance0 } + 'm\nDistance1:' + { distance1 } + 'm');
+          //console.log('Distance0:' + distance0 + 'm\nDistance1:' + distance1 + 'm');
+        }
+        getData({{ data|safe }})
       {% endif %}
+
     </script>
   </body>
 </html>
+
+

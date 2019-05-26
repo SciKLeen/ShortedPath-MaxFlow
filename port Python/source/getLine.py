@@ -2,8 +2,8 @@ import json
 from Algorithm.Dijkstra.Dijkstra import dijkstra, shortest_path
 
 def getData():
-    points = "data\points.json"
-    edges = "data\edges.json"    
+    points = "static/JSON/points.json"
+    edges = "static/JSON/edges.json"    
     with open(points, encoding='utf-8') as fh:
         points = json.load(fh)
         
@@ -15,7 +15,7 @@ def getData():
 
 def CreateGraph(points, edges):
     #create dictionary null
-    _dict = {};
+    _dict = {}
     max_flow = []
     
     for point in points:
@@ -26,12 +26,12 @@ def CreateGraph(points, edges):
         distance = edges[edge]['distance']
         _dict[edges[edge]['from']].update({edges[edge]['to'] : int(distance)})
         #print(type(edges[edge]['trafficflow']))
-        trafficflow = int(edges[edge]['trafficflow'])
-        maxflow = int(edges[edge]['maxflow'])
-        if ((trafficflow/maxflow)*100) >= 80:
-            max_flow.append((edges[edge]['from'], edges[edge]['to']))
+        #trafficflow = int(edges[edge]['trafficflow'])
+        #maxflow = int(edges[edge]['maxflow'])
+        #if ((trafficflow/maxflow)*100) >= 80:
+        #    max_flow.append((edges[edge]['from'], edges[edge]['to']))
    
-    return _dict, max_flow
+    return _dict#, max_flow
 
 #------------------------------------------------------------------------------
     
@@ -65,14 +65,19 @@ def ifmaxflownotnull(_maxflow, graph, _from, _to):
 
 
     if len(_maxflow) > 0:
-        for item in _maxflow:
-            temp.append(graph[item[0]][item[1]])
-            del graph[item[0]][item[1]]
+        # for item in _maxflow:
+        #     temp.append(graph[item[0]][item[1]])
+        #     del graph[item[0]][item[1]]
+        for items in _maxflow:
+            for i in range (1, len(items), 1):
+                temp.append(graph[items[i - 1]][items[i]])
+                del graph[items[i - 1]][items[i]]
+
 
         # check path From -> To
         _bool = check_path(graph, _from, _to)
         if _bool == True:
-            path, v = shortest_path(graph, _from, _to)
+            path, dist = shortest_path(graph, _from, _to)
 
 
         # resert edge for graph
@@ -86,7 +91,7 @@ def ifmaxflownotnull(_maxflow, graph, _from, _to):
             
             print("LOL")
             edges = create_shorted_case(StP)
-            print(edges)
+            #print(edges)
             
             for item in edges:
                 if (item[0]) in _maxflow:
@@ -98,18 +103,19 @@ def ifmaxflownotnull(_maxflow, graph, _from, _to):
                         path, v = shortest_path(graph, _from, _to)
                         break
             graph[edge[0]][edge[1]] = temp
-    return path, _maxflow
+    return path, dist
 #------------------------------------------------------------------------------
 def getlstCoordinates(points, _path):
-    lst =[];
-    
+    lst =[]
     for item in _path:
-        _lat = float(points[item]['latitude'])
-        _lng = float(points[item]['longtitude'])
-        
-        lst.append([_lat, _lng])
-    
+        lst.append(points[item])
     return lst
+
+def getlstCoordinatesFlow(points, _flow):
+    ls = []
+    for items in _flow:
+        ls.append([points[items[0]], points[items[1]]])
+    return ls
 
 def ProcessLine(ls0, ls1, ls2):
     for i in range(0, len(ls0), 1):
@@ -122,40 +128,74 @@ def ProcessLine(ls0, ls1, ls2):
     return ls0, ls1, ls2
     
 
+def getTheContent(points, _dict):
+    for item in _dict:
+        for point in points:
+            if(points[point]['latitude'] == str(item[0]) and points[point]['longtitude'] == str(item[1])):
+                _dict.append(points[point])
+                #print([point])
+                return
+    return _dict
 
-def shortestpath(_from, _to):
+
+
+# Check Flow
+def checkFlow(path, maxflow_line):
+    _flow = []
+    for items in maxflow_line:
+        temp = 0
+        for item in items:
+            if(item not in path):
+                temp = 1
+                break
+        if(temp == 0):
+            _flow.append(items)
+    return _flow
+
+def shortestpath(_from, _to, _maxflow):
     points, edges = getData()
-    graph, _maxflow = CreateGraph(points, edges)
-    
+    graph = CreateGraph(points, edges)
+
     # check valid values
+    #check input
+    chk_Fr = chk_To = False
     for item in points:
-        if item == _from:
-            chk_Fr = 1
-        if item == _to:
-            chk_To = 1
-    
+        if points[item]['Name'] == _from:
+            chk_Fr = True
+            _from = item
+        if points[item]['Name'] == _to:
+            chk_To = True
+            _to = item
+
+
     if chk_Fr & chk_To:
-        paths = []
-        
+        path0 = []
+        path1 = []
+        ls2 = []
+        dist0 = 0
+        dist1 = 0
+
         def CreateNewGraph(graph):
             return graph
 
         graph0 = CreateNewGraph(graph)
-        path0, v = shortest_path(graph0, _from, _to);
-        path1, maxflow_edge = ifmaxflownotnull(_maxflow, graph0, _from, _to)
+
+        # Get line Path 0
+        path0, dist0 = shortest_path(graph0, _from, _to)
+
+        # Check Flow of Path 0
+        _Flow = checkFlow(path0, _maxflow)
+
+        if (len(_Flow) > 0):
+            path1, dist1 = ifmaxflownotnull(_Flow, graph0, _from, _to)
         
-        
-    ls0 = getlstCoordinates(points, path0)
-    ls1 = getlstCoordinates(points, path1)
-    ls2 = getlstCoordinates(points, [_maxflow[0][0], _maxflow[0][1]])
+        #return _maxflow
+        ls0 = getlstCoordinates(points, path0)
+        ls1 = getlstCoordinates(points, path1)
+        for item in _Flow:
+            ls2.append(getlstCoordinates(points, item))
+ 
+        return [ls0, ls1, ls2, dist0, dist1]
+    return
 
-    #ls0, ls1, ls2 = ProcessLine(ls0, ls1, ls2)
-
-    return [ls0, ls1, ls2]
-    #print("line 1:", ls0)
-    #print("line 2:", ls1)
-    #print("Max Flow", ls2)
-        
-
-
-#main('06', '03')
+#shortestpath('Cổng 1 Đại Học Công Nghiệp', 'Công ty TNHH Đất Mũi', 'Bún măm Thu', 'Công Ty Tnhh Thương Mại Phát Triển Xây Dựng Minh Hùng')

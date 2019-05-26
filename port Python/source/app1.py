@@ -1,40 +1,32 @@
-import subprocess
+#from flask import Flask, render_template #, request 
+from flask import Flask, render_template, redirect, url_for, request, jsonify
+from getLine import shortestpath
 import json
-from flask import request, Flask, render_template
 
-def myCode():
-    if request.method == 'POST':
-        if request.form['action_button'] == 'MyAction':
-		
-            # # Get value from mypy.py
-			# path = "/path/to/python/file"
-			# args = "-a data1 -b data2 -c data3 -d data4"
-			# cmd = path + "mypy.py " + args
-			
-			# # Call command
-			# p = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-			# out, err = p.communicate()
-
-            out = {"Hoang Minh" : 5}
-			# out to json
-            res = json.dumps(out)
-			# print to debug
-            json.loads(res)
-			
-    elif request.method == 'GET':
-        return render_template('index.html')
-
-
-# from flask import Flask, render_template #, request 
 app = Flask(__name__)
  
 # url_for('static', filename='main.css')
 
-@app.route('/')
-def hello(name = None):
-    return render_template('json.html')
+temp = "hoang"
+# Route for handling the login page logic
+@app.route('/', methods=['GET', 'POST'])
+def getdirection():
+    if request.method == 'POST':
+        Items = [
+                {
+                "name": "John",
+                "lastname": "Smith", 
+                "age": 22, 
+                },
+                {
+                "name": "123",
+                "lastname": "Smith", 
+                "age": 22, 
+                }
+        ]
+        return render_template("index1.html", items=json.dumps(Items), varial = "123456")
+    return render_template('index1.html')
 
 
 if __name__ == '__main__':
     app.run()
-    

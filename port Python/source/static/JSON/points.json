@@ -1,0 +1,194 @@
+
+{
+    "00" :{
+        "Name": "Bún măm Thu",
+        "address" : "338 Nguyễn Thái Sơn, Phường 4, Quận Gò Vấp, Hồ Chí Minh, Việt Nam",
+        "latitude" : "10.8232",
+        "longtitude": "106.6859",
+        "streetnumber": "338",
+        "streetname": "nguyễn thái sơn",
+        "Ward": "4",
+        "distict": "gò vấp",
+        "city": "hồ chí minh",
+        "country": "việt nam"
+        },
+    "01" :{
+        "Name": "Agribank - Atm",
+        "address" : "11 Nguyễn Văn Bảo, Quận Gò Vấp, Thành Phố Hồ Chí Minh, Việt Nam",
+        "latitude" : "10.8226",
+        "longtitude": "106.6865",
+        "streetnumber": "11",
+        "streetname": "nguyễn văn bảo",
+        "Ward": "",
+        "distict": "gò vấp",
+        "city": "hồ chí minh",
+        "country": "việt nam"
+    },
+    "02": {
+        "Name": "Cổng 1 Đại Học Công Nghiệp",
+        "address" : "12 Nguyễn Văn Bảo, Quận Gò Vấp, Thành Phố Hồ Chí Minh, Việt Nam",
+        "latitude" : "10.822",
+        "longtitude": "106.6869",
+        "streetnumber": "12",
+        "streetname": "nguyễn văn bảo",
+        "Ward": "",
+        "distict": "gò vấp",
+        "city": "hồ chí minh",
+        "country": "việt nam"
+    },
+    "03": {
+        "Name": "Circle K Vietnam",
+        "address" : "27 Lê Lợi, Phường 4, Quận Gò Vấp, Hồ Chí Minh, Việt Nam",
+        "latitude" : "10.8208",
+        "longtitude": "106.6874",
+        "streetnumber": "27",
+        "streetname": "lê lợi",
+        "Ward": "4",
+        "distict": "gò vấp",
+        "city": "hồ chí minh",
+        "country": "việt nam"
+    },
+    "04": {
+        "Name": "Lotteria Nguyễn Văn Nghi",
+        "address" : "33 Nguyễn Văn Nghi, Quận Gò Vấp, Hồ Chí Minh, Việt Nam",
+        "latitude" : "10.8218",
+        "longtitude": "106.6886",
+        "streetnumber": "33",
+        "streetname": "nguyễn văn nghi",
+        "Ward": "",
+        "distict": "gò vấp",
+        "city": "hồ chí minh",
+        "country": "việt nam"
+    },
+
+    "05": {
+        "Name": "Tiệm Vàng Kim Ngọc Loan",
+        "address" : "74 Nguyễn Văn Nghi, Phường 5, Quận Gò Vấp, Hồ Chí Minh, Việt Nam",
+        "latitude" : "10.822765",
+        "longtitude": "106.688185",
+        "streetnumber": "74",
+        "streetname": "nguyễn văn nghi",
+        "Ward": "5",
+        "distict": "gò vấp",
+        "city": "hồ chí minh",
+        "country": "việt nam"
+    },
+
+    "06": {
+        "Name": "Công Ty TNHH Câu Lạc Bộ Võ Thuật Thần Châu",
+        "address" : "184 Đường Nguyễn Văn Nghi, Phường 5, Quận Gò Vấp, Hồ Chí Minh, Việt Nam",
+        "latitude" : "10.824180",
+        "longtitude": "106.686644",
+        "streetnumber": "184",
+        "streetname": "nguyễn văn nghi",
+        "Ward": "5",
+        "distict": "gò vấp",
+        "city": "hồ chí minh",
+        "country": "việt nam"
+    },
+
+    "07": {
+        "Name": "Trà Sữa Dr. Mên",
+        "address" : "34 Lê Lợi, Phường 4, Quận Gò Vấp, Hồ Chí Minh, Việt Nam",
+        "latitude" : "10.820631",
+        "longtitude": "106.687259",
+        "streetnumber": "34",
+        "streetname": "lê lợi",
+        "Ward": "4",
+        "distict": "gò vấp",
+        "city": "hồ chí minh",
+        "country": "việt nam"
+    },
+
+    "08": {
+        "Name": "Trà sữa MrBig store",
+        "address" : "72 Lê Lợi, Phường 4, Quận Gò Vấp, Hồ Chí Minh, Việt Nam",
+        "latitude" : "10.820131",
+        "longtitude": "106.686364",
+        "streetnumber": "72",
+        "streetname": "lê lợi",
+        "Ward": "4",
+        "distict": "gò vấp",
+        "city": "hồ chí minh",
+        "country": "việt nam"
+    },
+
+    "09": {
+        "Name": "Công ty TNHH Đất Mũi",
+        "address" : "58 Đường số 1, Phường 4, Quận Gò Vấp, Phường 4, Quận Gò Vấp, Hồ Chí Minh, Việt Nam",
+        "latitude" : "10.821301",
+        "longtitude": "106.685254",
+        "streetnumber": "58",
+        "streetname": "đường số 1",
+        "Ward": "4",
+        "distict": "gò vấp",
+        "city": "hồ chí minh",
+        "country": "việt nam"
+    },
+
+    "10": {
+        "Name": "Nail Cúc",
+        "address" : "56, Đường Số 1, Phường 4, Quận Gò Vấp, Thành Phố Hồ Chí Minh",
+        "latitude" : "10.821777",
+        "longtitude": "106.685863",
+        "streetnumber": "56",
+        "streetname": "đường số 1",
+        "Ward": "4",
+        "distict": "gò vấp",
+        "city": "hồ chí minh",
+        "country": "việt nam"
+    },
+
+    "11": {
+        "Name": "Công Ty Tnhh Thương Mại Phát Triển Xây Dựng Minh Hùng",
+        "address" : "222 Nguyễn Thái Sơn, Quận Gò Vấp, Việt Nam",
+        "latitude" : "10.822315",
+        "longtitude": "106.685160",
+        "streetnumber": "222",
+        "streetname": "nguyễn thái sơn",
+        "Ward": "4",
+        "distict": "gò vấp",
+        "city": "hồ chí minh",
+        "country": "việt nam"
+    },
+
+    "12": {
+        "Name": "Cửa Hàng Thái Lan",
+        "address" : "268 Nguyễn Thái Sơn, Phường 4, Gò Vấp, Hồ Chí Minh, Việt Nam",
+        "latitude" : "10.821533",
+        "longtitude": "106.684590",
+        "streetnumber": "268",
+        "streetname": "nguyễn thái sơn",
+        "Ward": "4",
+        "distict": "gò vấp",
+        "city": "hồ chí minh",
+        "country": "việt nam"
+    },
+
+    "13": {
+        "Name": "Kamegara",
+        "address" : "270 Nguyễn Thái Sơn, Phường 4, Gò Vấp, Hồ Chí Minh 727900, Việt Nam",
+        "latitude" : "10.821334",
+        "longtitude": "106.684855",
+        "streetnumber": "270",
+        "streetname": "nguyễn thái sơn",
+        "Ward": "4",
+        "distict": "gò vấp",
+        "city": "hồ chí minh",
+        "country": "việt nam"
+    },
+    
+    "14": {
+        "Name": "Công Ty Cp Đầu Tư Công Nghệ Trường Minh",
+        "address" : "75 Lê Lợi, Phường 4, Quận Gò Vấp, Hồ Chí Minh, Việt Nam",
+        "latitude" : "10.819975",
+        "longtitude": "106.686251",
+        "streetnumber": "75",
+        "streetname": "lê lợi",
+        "Ward": "4",
+        "distict": "gò vấp",
+        "city": "hồ chí minh",
+        "country": "việt nam"
+    }
+}
+

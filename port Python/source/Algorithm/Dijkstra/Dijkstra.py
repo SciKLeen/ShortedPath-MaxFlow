@@ -123,3 +123,4 @@ if __name__ == '__main__':
     dist, pred = dijkstra(graph, start='a')
     expected = {'a': 0, 'c': 9, 'b': 11, 'e': 20, 'd': 7, 'f': 20}
     assert dist == expected
+    
