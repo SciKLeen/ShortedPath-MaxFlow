@@ -54,5 +54,5 @@ soupsieve==1.6.2
 sqlparse==0.3.0
 thinker==1.1.1
 traitlets==4.3.2
-urllib3==1.24.1
+urllib3==1.24.2
 Werkzeug==0.15.0
