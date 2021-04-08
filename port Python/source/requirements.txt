@@ -10,7 +10,7 @@ dash-html-components==0.15.0
 dash-renderer==0.21.0
 dash-table==3.6.0
 decorator==4.3.0
-Django==2.2.13
+Django==2.2.20
 django-filter==2.1.0
 djangorestframework==3.9.2
 elasticsearch==6.3.1
